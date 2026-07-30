@@ -141,14 +141,14 @@ export default function CookieSettingsPage() {
           <div className="flex flex-col sm:flex-row gap-3">
             <button
               onClick={() => setCookieConsent(true)}
-              className={`flex-1 flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-semibold text-sm transition-all ${cookieConsent.accepted === true ? 'bg-green-500 text-white' : 'bg-[#b45309] hover:bg-[#92400e] text-white'}`}
+              className={`flex-1 flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-semibold text-sm transition-all ${cookieConsent.accepted === true ? 'bg-green-500 text- deep-blue' : 'bg-coastal hover:bg-deep-blue text- deep-blue'}`}
             >
               <Check className="w-4 h-4" />
               Cookies akzeptieren
             </button>
             <button
               onClick={() => setCookieConsent(false)}
-              className={`flex-1 flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-semibold text-sm border transition-all ${cookieConsent.accepted === false ? 'bg-stone-700 text-white border-stone-700' : 'border-stone-300 text-stone-600 hover:border-stone-500 hover:text-stone-800'}`}
+              className={`flex-1 flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-semibold text-sm border transition-all ${cookieConsent.accepted === false ? 'bg-stone-700 text- deep-blue border-stone-700' : 'border-stone-300 text-stone-600 hover:border-stone-500 hover:text-stone-800'}`}
             >
               <X className="w-4 h-4" />
               Cookies ablehnen
@@ -160,7 +160,7 @@ export default function CookieSettingsPage() {
         </div>
 
         <div className="text-center">
-          <a href="/datenschutz" className="text-sm text-[#b45309] hover:underline">
+          <a href="/datenschutz" className="text-sm text-deep-blue hover:underline">
             Vollständige Datenschutzerklärung ansehen
           </a>
         </div>

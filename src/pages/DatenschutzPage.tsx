@@ -81,7 +81,7 @@ export default function DatenschutzPage() {
               Sie haben jederzeit das Recht, unentgeltlich Auskunft über Herkunft, Empfänger und Zweck Ihrer gespeicherten personenbezogenen Daten zu erhalten. Sie haben außerdem das Recht, die Berichtigung oder Löschung dieser Daten zu verlangen. Wenn Sie eine Einwilligung zur Datenverarbeitung erteilt haben, können Sie diese Einwilligung jederzeit für die Zukunft widerrufen.
             </p>
             <p>
-              Zur Geltendmachung Ihrer Rechte wenden Sie sich bitte an: <a href="mailto:utafinke@web.de" className="text-[#b45309] hover:underline">utafinke@web.de</a>
+              Zur Geltendmachung Ihrer Rechte wenden Sie sich bitte an: <a href="mailto:utafinke@web.de" className="text-deep-blue hover:underline">utafinke@web.de</a>
             </p>
           </section>
 

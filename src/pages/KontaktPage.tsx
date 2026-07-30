@@ -106,7 +106,7 @@ export default function KontaktPage() {
           </p>
           <button
             onClick={() => setSubmitted(false)}
-            className="text-[#b45309] hover:text-[#92400e] font-semibold text-sm"
+            className="text-deep-blue hover:text-[#92400e] font-semibold text-sm"
           >
             Neue Anfrage senden
           </button>
@@ -290,7 +290,7 @@ export default function KontaktPage() {
                           name={opt.name}
                           checked={form[opt.name as keyof typeof form] as boolean}
                           onChange={handleChange}
-                          className="w-4 h-4 rounded border-stone-300 text-[#b45309] focus:ring-[#b45309]"
+                          className="w-4 h-4 rounded border-stone-300 text-deep-blue focus:ring-[#b45309]"
                         />
                         <span className="text-sm text-stone-600 group-hover:text-[#292524] transition-colors">
                           {opt.label}
@@ -322,11 +322,11 @@ export default function KontaktPage() {
                     name="privacy"
                     checked={form.privacy}
                     onChange={handleChange}
-                    className="w-4 h-4 rounded border-stone-300 text-[#b45309] focus:ring-[#b45309] mt-0.5"
+                    className="w-4 h-4 rounded border-stone-300 text-deep-blue focus:ring-[#b45309] mt-0.5"
                   />
                   <span className="text-sm text-stone-500">
                     Ich habe die{' '}
-                    <a href="/datenschutz" className="text-[#b45309] underline hover:no-underline">
+                    <a href="/datenschutz" className="text-deep-blue underline hover:no-underline">
                       Datenschutzerklärung
                     </a>{' '}
                     gelesen und stimme der Verarbeitung meiner Daten zu. <span className="text-red-400">*</span>
@@ -335,7 +335,7 @@ export default function KontaktPage() {
 
                 <button
                   type="submit"
-                  className="w-full flex items-center justify-center gap-2 bg-[#b45309] hover:bg-[#92400e] text-white px-6 py-3.5 rounded-xl font-semibold text-base transition-all shadow-md hover:shadow-lg"
+                  className="w-full flex items-center justify-center gap-2 bg-coastal hover:bg-deep-blue text- deep-blue px-6 py-3.5 rounded-xl font-semibold text-base transition-all shadow-md hover:shadow-lg"
                 >
                   <Send className="w-4 h-4" />
                   Anfrage senden
@@ -359,8 +359,8 @@ export default function KontaktPage() {
                   href="tel:01781895560"
                   className="flex items-center gap-3 p-3 rounded-xl bg-stone-50 hover:bg-[#fef3c7]/60 transition-all group"
                 >
-                  <div className="w-10 h-10 rounded-full bg-[#b45309]/10 flex items-center justify-center flex-shrink-0">
-                    <Phone className="w-4 h-4 text-[#b45309]" />
+                  <div className="w-10 h-10 rounded-full bg-coastal/10 flex items-center justify-center flex-shrink-0">
+                    <Phone className="w-4 h-4 text-deep-blue" />
                   </div>
                   <div>
                     <div className="text-xs text-stone-400 mb-0.5">Telefon</div>
@@ -387,8 +387,8 @@ export default function KontaktPage() {
                   href="mailto:utafinke@web.de"
                   className="flex items-center gap-3 p-3 rounded-xl bg-stone-50 hover:bg-[#fef3c7]/60 transition-all"
                 >
-                  <div className="w-10 h-10 rounded-full bg-[#b45309]/10 flex items-center justify-center flex-shrink-0">
-                    <Mail className="w-4 h-4 text-[#b45309]" />
+                  <div className="w-10 h-10 rounded-full bg-coastal/10 flex items-center justify-center flex-shrink-0">
+                    <Mail className="w-4 h-4 text-deep-blue" />
                   </div>
                   <div>
                     <div className="text-xs text-stone-400 mb-0.5">E-Mail</div>
@@ -397,8 +397,8 @@ export default function KontaktPage() {
                 </a>
 
                 <div className="flex items-center gap-3 p-3 rounded-xl bg-stone-50">
-                  <div className="w-10 h-10 rounded-full bg-[#b45309]/10 flex items-center justify-center flex-shrink-0">
-                    <MapPin className="w-4 h-4 text-[#b45309]" />
+                  <div className="w-10 h-10 rounded-full bg-coastal/10 flex items-center justify-center flex-shrink-0">
+                    <MapPin className="w-4 h-4 text-deep-blue" />
                   </div>
                   <div>
                     <div className="text-xs text-stone-400 mb-0.5">Adresse</div>
@@ -413,14 +413,14 @@ export default function KontaktPage() {
             {/* Karte Platzhalter */}
             <div className="bg-white rounded-2xl shadow-sm border border-stone-100 overflow-hidden">
               <div className="bg-stone-100 h-52 flex flex-col items-center justify-center text-stone-400">
-                <MapPin className="w-10 h-10 mb-2 text-[#b45309]" />
+                <MapPin className="w-10 h-10 mb-2 text-deep-blue" />
                 <p className="text-sm font-medium text-[#292524]">Robert-Koch-Straße 26</p>
                 <p className="text-xs">04552 Borna, Sachsen</p>
                 <a
                   href="https://maps.google.com/?q=Robert-Koch-Straße+26+04552+Borna"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-3 text-xs text-[#b45309] underline hover:no-underline"
+                  className="mt-3 text-xs text-deep-blue underline hover:no-underline"
                 >
                   In Google Maps öffnen
                 </a>
@@ -444,7 +444,7 @@ export default function KontaktPage() {
                   <span className="font-bold">25,00 €</span>
                 </div>
               </div>
-              <div className="mt-3 bg-white/70 rounded-lg p-2.5 text-xs text-[#b45309] font-medium text-center">
+              <div className="mt-3 bg-white/70 rounded-lg p-2.5 text-xs text-deep-blue font-medium text-center">
                 🎁 Simply Good: Ab 7 Nächten 1 Nacht gratis!
               </div>
             </div>

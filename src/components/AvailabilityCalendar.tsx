@@ -62,7 +62,7 @@ export default function AvailabilityCalendar({ apartment, bookings, compact = fa
         <button
           onClick={() => setCurrentMonth(subMonths(currentMonth, 1))}
           disabled={!canGoPrev}
-          className="p-1.5 rounded-lg hover:bg-amber-50 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+          className="p-1.5 rounded-lg hover:bg-coastal50 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
         >
           <ChevronLeft className="w-5 h-5 text-[#292524]" />
         </button>
@@ -71,7 +71,7 @@ export default function AvailabilityCalendar({ apartment, bookings, compact = fa
         </h3>
         <button
           onClick={() => setCurrentMonth(addMonths(currentMonth, 1))}
-          className="p-1.5 rounded-lg hover:bg-amber-50 transition-colors"
+          className="p-1.5 rounded-lg hover:bg-coastal50 transition-colors"
         >
           <ChevronRight className="w-5 h-5 text-[#292524]" />
         </button>

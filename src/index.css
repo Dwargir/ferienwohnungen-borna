@@ -1,56 +1,26 @@
 @import "tailwindcss";
 
 @theme {
-  --font-serif: "Playfair Display", Georgia, serif;
-  --font-sans: "Inter", system-ui, sans-serif;
-
-  --color-amber-brand: #b45309;
-  --color-stone-brand: #292524;
-  --color-cream: #f5f5f0;
-  --color-beige: #fef3c7;
+  --color-deep-blue: #2c5f6e;
+  --color-dark-stone: #4a4a4a;
+  --color-creamy: #fcf8f3;
+  --color-coastal: #7fa9b9;
+  --color-ocean-mist: #b5d1d9;
+  --color-sky-soft: #d6e8f0;
+  --font-family-display: "Playfair Display", serif;
+  --font-family-body: "Inter", sans-serif;
 }
 
-* {
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  font-family: "Inter", system-ui, sans-serif;
-  background-color: #f5f5f0;
-  color: #292524;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background: #f5f5f0;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #b45309;
-  border-radius: 3px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #92400e;
-}
-
-/* Date input styling */
-input[type="date"]::-webkit-calendar-picker-indicator {
-  cursor: pointer;
-  opacity: 0.6;
-  filter: invert(0.4);
-}
-
-input[type="date"]::-webkit-calendar-picker-indicator:hover {
-  opacity: 1;
+@layer base {
+  body {
+    background-color: var(--color-creamy);
+    color: var(--color-dark-stone);
+    font-family: var(--font-family-body);
+  }
+  
+  /* ALLE Überschriften erben diese Farbe – außer sie werden überschrieben */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-family-display);
+    color: var(--color-deep-blue);
+  }
 }

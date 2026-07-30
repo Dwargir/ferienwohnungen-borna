@@ -42,7 +42,7 @@ function Layout() {
                   Seite nicht gefunden
                 </h1>
                 <p className="text-stone-500 mb-6">Diese Seite existiert leider nicht.</p>
-                <a href="/" className="bg-[#b45309] text-white px-6 py-2.5 rounded-xl font-semibold hover:bg-[#92400e] transition-all">
+                <a href="/" className="bg-coastal text- deep-blue px-6 py-2.5 rounded-xl font-semibold hover:bg-deep-blue transition-all">
                   Zur Startseite
                 </a>
               </div>

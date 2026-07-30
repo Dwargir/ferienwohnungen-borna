@@ -53,7 +53,7 @@ export default function SimplyGoodPage() {
         <div className="absolute inset-0 bg-gradient-to-t from-[#292524]/80 via-[#292524]/30 to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-10">
           <div className="max-w-7xl mx-auto">
-            <span className="bg-[#b45309] text-white text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full mb-3 inline-block">
+            <span className="bg-coastal text- deep-blue text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full mb-3 inline-block">
               Erdgeschoss
             </span>
             <h1 className="text-4xl sm:text-5xl font-bold text-[#fef3c7] mt-2" style={{ fontFamily: 'Playfair Display, serif' }}>
@@ -80,7 +80,7 @@ export default function SimplyGoodPage() {
                   { icon: <Car className="w-5 h-5" />, label: 'Mindestaufenthalt', value: '2 Nächte' },
                 ].map((f) => (
                   <div key={f.label} className="text-center p-3 bg-[#fef3c7]/40 rounded-xl">
-                    <div className="flex justify-center mb-1 text-[#b45309]">{f.icon}</div>
+                    <div className="flex justify-center mb-1 text-deep-blue">{f.icon}</div>
                     <div className="text-lg font-bold text-[#292524]">{f.value}</div>
                     <div className="text-xs text-stone-400">{f.label}</div>
                   </div>
@@ -127,7 +127,7 @@ export default function SimplyGoodPage() {
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                 {amenities.map((a) => (
                   <div key={a.label} className="flex items-center gap-2 p-2.5 rounded-lg bg-[#fef3c7]/50 border border-amber-100">
-                    <span className="text-[#b45309]">{a.icon}</span>
+                    <span className="text-deep-blue">{a.icon}</span>
                     <span className="text-sm text-[#292524] font-medium">{a.label}</span>
                   </div>
                 ))}
@@ -151,9 +151,9 @@ export default function SimplyGoodPage() {
             </div>
 
             {/* Hinweise */}
-            <div className="bg-amber-50 border border-amber-200 rounded-2xl p-6">
+            <div className="bg-coastal50 border border-amber-200 rounded-2xl p-6">
               <h2 className="text-base font-bold text-[#292524] mb-3 flex items-center gap-2">
-                <Info className="w-5 h-5 text-[#b45309]" />
+                <Info className="w-5 h-5 text-deep-blue" />
                 Hinweise
               </h2>
               <ul className="space-y-2">
@@ -166,7 +166,7 @@ export default function SimplyGoodPage() {
                   'Endreinigung: 25,00 €',
                 ].map((note) => (
                   <li key={note} className="flex items-start gap-2 text-sm text-stone-600">
-                    <Check className="w-4 h-4 text-[#b45309] flex-shrink-0 mt-0.5" />
+                    <Check className="w-4 h-4 text-deep-blue flex-shrink-0 mt-0.5" />
                     {note}
                   </li>
                 ))}
@@ -181,7 +181,7 @@ export default function SimplyGoodPage() {
               <div className="flex flex-wrap gap-2">
                 {nearby.map((place) => (
                   <div key={place} className="flex items-center gap-1.5 bg-stone-50 border border-stone-200 rounded-lg px-3 py-2">
-                    <MapPin className="w-3.5 h-3.5 text-[#b45309]" />
+                    <MapPin className="w-3.5 h-3.5 text-deep-blue" />
                     <span className="text-sm text-stone-700 font-medium">{place}</span>
                   </div>
                 ))}
@@ -236,7 +236,7 @@ export default function SimplyGoodPage() {
 
               {/* Rabatt-Hinweis */}
               <div className="bg-[#fef3c7] border border-amber-200 rounded-xl p-3 mb-5 text-center">
-                <div className="text-[#b45309] font-bold text-sm">🎁 Langzeit-Rabatt</div>
+                <div className="text-deep-blue font-bold text-sm">🎁 Langzeit-Rabatt</div>
                 <div className="text-xs text-[#292524]/70 mt-1">
                   Ab 7 Übernachtungen gibt es eine Nacht gratis!
                 </div>
@@ -245,7 +245,7 @@ export default function SimplyGoodPage() {
               <div className="space-y-3">
                 <Link
                   to="/kontakt?wohnung=simply-good"
-                  className="block w-full text-center bg-[#b45309] hover:bg-[#92400e] text-white px-4 py-3 rounded-xl font-semibold transition-all"
+                  className="block w-full text-center bg-coastal hover:bg-deep-blue text- deep-blue px-4 py-3 rounded-xl font-semibold transition-all"
                 >
                   Jetzt anfragen
                 </Link>
@@ -257,7 +257,7 @@ export default function SimplyGoodPage() {
                 </Link>
                 <a
                   href="tel:01781895560"
-                  className="flex items-center justify-center gap-2 w-full text-center border border-stone-200 hover:border-[#b45309] text-stone-600 hover:text-[#b45309] px-4 py-2.5 rounded-xl font-semibold text-sm transition-all"
+                  className="flex items-center justify-center gap-2 w-full text-center border border-stone-200 hover:border-[#b45309] text-stone-600 hover:text-deep-blue px-4 py-2.5 rounded-xl font-semibold text-sm transition-all"
                 >
                   <Phone className="w-4 h-4" />
                   0178 1895560
@@ -272,7 +272,7 @@ export default function SimplyGoodPage() {
             {/* Betten */}
             <div className="bg-white rounded-2xl shadow-sm border border-stone-100 p-5">
               <h3 className="font-bold text-[#292524] mb-3 flex items-center gap-2">
-                <Bed className="w-4 h-4 text-[#b45309]" />
+                <Bed className="w-4 h-4 text-deep-blue" />
                 Betten
               </h3>
               <ul className="space-y-2 text-sm text-stone-600">
@@ -298,7 +298,7 @@ export default function SimplyGoodPage() {
               <p className="text-[#fef3c7]/60 text-xs mb-4">Dachgeschoss – 2 getrennte Schlafzimmer</p>
               <Link
                 to="/simply-nice"
-                className="inline-flex items-center gap-1 text-[#b45309] hover:text-[#92400e] text-sm font-semibold transition-colors"
+                className="inline-flex items-center gap-1 text-deep-blue hover:text-[#92400e] text-sm font-semibold transition-colors"
               >
                 Mehr erfahren <ChevronRight className="w-4 h-4" />
               </Link>

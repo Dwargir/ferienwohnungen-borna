@@ -28,7 +28,7 @@ export default function ImpressumPage() {
             </h2>
             <p className="text-stone-600 text-sm leading-relaxed">
               Telefon: 0178 1895560<br />
-              E-Mail: <a href="mailto:utafinke@web.de" className="text-[#b45309] hover:underline">utafinke@web.de</a>
+              E-Mail: <a href="mailto:utafinke@web.de" className="text-deep-blue hover:underline">utafinke@web.de</a>
             </p>
           </section>
 

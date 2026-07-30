@@ -48,8 +48,8 @@ export default function VerfuegbarkeitPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
 
         {/* Hinweis */}
-        <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-8 flex items-start gap-3">
-          <Info className="w-5 h-5 text-[#b45309] flex-shrink-0 mt-0.5" />
+        <div className="bg-coastal50 border border-amber-200 rounded-xl p-4 mb-8 flex items-start gap-3">
+          <Info className="w-5 h-5 text-deep-blue flex-shrink-0 mt-0.5" />
           <div className="text-sm text-[#292524]/80">
             <strong>Wichtig:</strong> Buchung erst nach Bestätigung verbindlich. Bitte senden Sie eine Anfrage für Ihren gewünschten Zeitraum. Wir bestätigen Ihnen die Verfügbarkeit so schnell wie möglich.
           </div>
@@ -93,7 +93,7 @@ export default function VerfuegbarkeitPage() {
                     <h2 className="text-[#fef3c7] font-bold text-lg" style={{ fontFamily: 'Playfair Display, serif' }}>
                       {info.name}
                     </h2>
-                    <div className="text-[#b45309] text-xs font-medium uppercase tracking-wide">{info.sub}</div>
+                    <div className="text-deep-blue text-xs font-medium uppercase tracking-wide">{info.sub}</div>
                   </div>
                   <div className="text-right">
                     <div className="text-[#fef3c7] font-bold text-lg">ab {info.price}</div>
@@ -109,13 +109,13 @@ export default function VerfuegbarkeitPage() {
                   <div className="flex gap-3">
                     <Link
                       to={`/kontakt?wohnung=${apt}`}
-                      className="flex-1 text-center bg-[#b45309] hover:bg-[#92400e] text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition-all"
+                      className="flex-1 text-center bg-coastal hover:bg-deep-blue text- deep-blue px-4 py-2.5 rounded-xl text-sm font-semibold transition-all"
                     >
                       Jetzt anfragen
                     </Link>
                     <Link
                       to={info.link}
-                      className="flex items-center justify-center gap-1 px-4 py-2.5 rounded-xl text-sm font-semibold border border-stone-200 hover:border-[#b45309] text-stone-600 hover:text-[#b45309] transition-all"
+                      className="flex items-center justify-center gap-1 px-4 py-2.5 rounded-xl text-sm font-semibold border border-stone-200 hover:border-[#b45309] text-stone-600 hover:text-deep-blue transition-all"
                     >
                       Details <ChevronRight className="w-4 h-4" />
                     </Link>
@@ -142,7 +142,7 @@ export default function VerfuegbarkeitPage() {
                       <h3 className="font-bold text-[#292524] text-lg" style={{ fontFamily: 'Playfair Display, serif' }}>
                         {apt.name}
                       </h3>
-                      <span className="bg-[#b45309]/10 text-[#b45309] text-xs px-2 py-0.5 rounded-full font-medium">
+                      <span className="bg-coastal/10 text-deep-blue text-xs px-2 py-0.5 rounded-full font-medium">
                         {apt.subtitle}
                       </span>
                     </div>
@@ -176,7 +176,7 @@ export default function VerfuegbarkeitPage() {
 
                   <Link
                     to={apt.link}
-                    className="sm:self-center inline-flex items-center gap-1 text-[#b45309] hover:text-[#92400e] font-semibold text-sm transition-colors flex-shrink-0"
+                    className="sm:self-center inline-flex items-center gap-1 text-deep-blue hover:text-[#92400e] font-semibold text-sm transition-colors flex-shrink-0"
                   >
                     Details ansehen <ChevronRight className="w-4 h-4" />
                   </Link>
@@ -204,7 +204,7 @@ export default function VerfuegbarkeitPage() {
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
               to="/kontakt"
-              className="inline-flex items-center justify-center gap-2 bg-[#b45309] hover:bg-[#92400e] text-white px-8 py-3 rounded-xl font-semibold transition-all"
+              className="inline-flex items-center justify-center gap-2 bg-coastal hover:bg-deep-blue text- deep-blue px-8 py-3 rounded-xl font-semibold transition-all"
             >
               Anfrage senden
             </Link>
