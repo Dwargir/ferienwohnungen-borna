@@ -21,6 +21,13 @@ const KALENDER: { wohnung: WohnungId; url: string }[] = [
 ];
 
 export type Status = 'laedt' | 'ok' | 'fehler';
+/*
+  Zusätzlich gesperrte Tage, falls Booking.com sie (noch) nicht mitschickt.
+  von = erste gesperrte Nacht, bis = Tag danach (wie bei einer Abreise).
+  Beispiel: 24. bis 26. Dezember gesperrt → { wohnung: 'simply-good', von: '2026-12-24', bis: '2026-12-27' }
+*/
+const ZUSAETZLICH_GESPERRT: Belegung[] = [];
+
 type Zustand = { belegungen: Belegung[]; status: Status; statusJe: Partial<Record<WohnungId, Status>> };
 
 let zustand: Zustand = { belegungen: [], status: 'laedt', statusJe: {} };
@@ -63,7 +70,7 @@ async function lade() {
       return leseICal(await antwort.text(), k.wohnung);
     }),
   );
-  const belegungen = ergebnisse.flatMap((e) => (e.status === 'fulfilled' ? e.value : []));
+  const belegungen = [...ergebnisse.flatMap((e) => (e.status === 'fulfilled' ? e.value : [])), ...ZUSAETZLICH_GESPERRT];
   const statusJe: Partial<Record<WohnungId, Status>> = {};
   ergebnisse.forEach((e, i) => (statusJe[KALENDER[i].wohnung] = e.status === 'fulfilled' ? 'ok' : 'fehler'));
   const fehler = ergebnisse.some((e) => e.status === 'rejected');

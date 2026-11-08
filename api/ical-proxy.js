@@ -52,8 +52,8 @@ export default async function handler(req, res) {
       });
     }
     res.setHeader('Content-Type', 'text/calendar; charset=utf-8');
-    // 5 Minuten zwischenspeichern, damit Booking.com nicht bei jedem Besuch gefragt wird
-    res.setHeader('Cache-Control', 's-maxage=300, stale-while-revalidate=600');
+    // 1 Minute zwischenspeichern, damit Booking.com nicht bei jedem Besuch gefragt wird
+    res.setHeader('Cache-Control', 's-maxage=60, stale-while-revalidate=120');
     res.status(200).send(data);
   } catch (error) {
     console.error('Proxy error:', error);
