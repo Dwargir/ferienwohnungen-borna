@@ -10,7 +10,8 @@ export interface Wohnung {
   name: string;
   etage: string;
   kurz: string;
-  preis: number;
+  preis: number; // günstigster Preis pro Nacht (für „ab …“)
+  preise: { werktags: number; wochenende: number; weihnachten: number };
   personen: number;
   groesse?: string;
   schlafzimmer: number;
@@ -45,6 +46,7 @@ export const wohnungen: Wohnung[] = [
     etage: 'Erdgeschoss',
     kurz: 'Mit Kamin und eigener Terrasse',
     preis: 95,
+    preise: { werktags: 95, wochenende: 112, weihnachten: 117 },
     personen: 3,
     groesse: '50 m²',
     schlafzimmer: 1,
@@ -78,6 +80,7 @@ export const wohnungen: Wohnung[] = [
     etage: 'Dachgeschoss',
     kurz: 'Zwei getrennte Schlafzimmer',
     preis: 92,
+    preise: { werktags: 92, wochenende: 109, weihnachten: 112 },
     personen: 3,
     groesse: '50 m²',
     schlafzimmer: 2,
@@ -135,3 +138,12 @@ export const highlights = [
   { wert: 'WLAN', titel: 'Ideal zum Arbeiten', text: 'Kostenloses WLAN und ein ruhiger Platz – gut für Geschäftsreisen.' },
   { wert: 'Level 2', titel: 'Nachhaltiger reisen', text: 'Ausgezeichnet im Programm von Booking.com.' },
 ];
+
+// Bezeichnungen der Preisstufen (Preise pro Nacht)
+export const PREISSTUFEN = [
+  { key: 'werktags', name: 'Sonntag bis Donnerstag' },
+  { key: 'wochenende', name: 'Freitag und Samstag' },
+  { key: 'weihnachten', name: 'Weihnachten' },
+] as const;
+
+export const DIREKT_VORTEIL = 'Direkt bei uns buchen ist günstiger als über Booking.com.';

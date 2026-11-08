@@ -3,7 +3,8 @@ import Galerie from '../components/Galerie';
 import Kalender from '../components/Kalender';
 import { Telefon } from '../components/Icons';
 import Bewertung from '../components/Bewertung';
-import { wohnungById, wohnungen, euro, ENDREINIGUNG, MINDESTAUFENTHALT, KONTAKT } from '../data/wohnungen';
+import Preisliste from '../components/Preisliste';
+import { wohnungById, wohnungen, euro, ENDREINIGUNG, MINDESTAUFENTHALT, KONTAKT, DIREKT_VORTEIL } from '../data/wohnungen';
 import { fotosFuer } from '../data/fotos';
 import { useBelegung } from '../data/belegung';
 
@@ -93,8 +94,10 @@ export default function WohnungPage({ id: festeId }: { id?: string }) {
 
         <aside className="lg:sticky lg:top-24 self-start">
           <div className="bg-white border border-linie rounded-md p-6">
-            <div className="text-3xl font-semibold tabular-nums">{euro(w.preis)}</div>
-            <div className="klein text-schilf">pro Nacht, zzgl. {euro(ENDREINIGUNG)} Endreinigung</div>
+            <div className="font-semibold">Preise pro Nacht</div>
+            <div className="mt-2"><Preisliste w={w} /></div>
+            <div className="klein text-schilf mt-2">zzgl. {euro(ENDREINIGUNG)} Endreinigung</div>
+            <p className="klein mt-4 font-semibold text-wasser">{DIREKT_VORTEIL}</p>
             {w.angebot && <p className="klein mt-4 bg-sonne/25 px-3 py-2 rounded-sm">{w.angebot}</p>}
             <Link to={`/kontakt?wohnung=${w.id}`} className="knopf w-full mt-6">Diese Wohnung anfragen</Link>
             <a href={KONTAKT.telefonLink} className="knopf knopf-hell w-full mt-3">

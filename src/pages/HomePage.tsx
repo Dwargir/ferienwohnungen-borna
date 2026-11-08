@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import KontaktWege from '../components/KontaktWege';
 import Bewertung from '../components/Bewertung';
-import { wohnungen, euro, highlights } from '../data/wohnungen';
+import { wohnungen, euro, highlights, DIREKT_VORTEIL } from '../data/wohnungen';
 import { fotosFuer } from '../data/fotos';
 
 /*
@@ -61,6 +61,7 @@ export default function HomePage() {
       {/* 2. Die Wohnungen */}
       <section id="wohnungen" className="max-w-6xl mx-auto px-5 sm:px-8 pt-16 sm:pt-20 scroll-mt-20">
         <h2 className="text-3xl sm:text-4xl">Unsere beiden Wohnungen für Ihre perfekte Auszeit</h2>
+        <p className="mt-3 font-semibold text-wasser">{DIREKT_VORTEIL}</p>
         <div className="mt-8 grid gap-10 md:grid-cols-2">
           {wohnungen.map((w) => {
             const bild = fotosFuer(w.id)[0];
