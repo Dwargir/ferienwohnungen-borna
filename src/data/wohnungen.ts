@@ -20,6 +20,8 @@ export interface Wohnung {
   ausstattung: string[];
   hinweise: string[];
   angebot?: string;
+  // Gästebewertung auf Booking.com – bei Bedarf hier aktualisieren
+  bewertung: { note: number; anzahl: number; link: string };
 }
 
 export const ENDREINIGUNG = 25;
@@ -68,6 +70,7 @@ export const wohnungen: Wohnung[] = [
       'Kaminholz auf Anfrage',
     ],
     angebot: 'Ab 7 Nächten ist eine Nacht gratis.',
+    bewertung: { note: 8.9, anzahl: 61, link: 'https://www.booking.com/hotel/de/simply-good-appartment.de.html' },
   },
   {
     id: 'simply-nice',
@@ -100,6 +103,7 @@ export const wohnungen: Wohnung[] = [
       'Nur über die Treppe erreichbar',
       'Autobahn A72, Abfahrt Borna-Nord',
     ],
+    bewertung: { note: 8.7, anzahl: 29, link: 'https://www.booking.com/hotel/de/simply-nice-appartment.de.html' },
   },
 ];
 
@@ -118,4 +122,8 @@ export function wohnungById(id: string | undefined) {
 
 export function euro(betrag: number) {
   return betrag.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+}
+
+export function note(n: number) {
+  return n.toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
 }

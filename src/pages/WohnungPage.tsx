@@ -2,6 +2,7 @@ import { Link, Navigate, useParams } from 'react-router-dom';
 import Galerie from '../components/Galerie';
 import Kalender from '../components/Kalender';
 import { Telefon } from '../components/Icons';
+import Bewertung from '../components/Bewertung';
 import { wohnungById, wohnungen, euro, ENDREINIGUNG, MINDESTAUFENTHALT, KONTAKT } from '../data/wohnungen';
 import { fotosFuer } from '../data/fotos';
 import { useBelegung } from '../data/belegung';
@@ -33,6 +34,7 @@ export default function WohnungPage({ id: festeId }: { id?: string }) {
           </p>
           <h1 className="text-4xl sm:text-5xl mt-2">{w.name}</h1>
           <p className="mt-2 text-lg">{w.kurz}</p>
+          <div className="mt-4"><Bewertung w={w} /></div>
         </div>
       </div>
 

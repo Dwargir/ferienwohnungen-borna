@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import KontaktWege from '../components/KontaktWege';
+import Bewertung from '../components/Bewertung';
 import { wohnungen, euro } from '../data/wohnungen';
 import { fotosFuer } from '../data/fotos';
 
@@ -66,6 +67,7 @@ export default function HomePage() {
                     <p className="klein text-schilf">{w.etage}</p>
                     <h3 className="text-2xl sm:text-[1.75rem] group-hover:underline underline-offset-4 decoration-2">{w.name}</h3>
                     <p className="mt-1">{w.kurz}</p>
+                    <div className="mt-3"><Bewertung w={w} link={false} /></div>
                   </div>
                   <div className="text-right shrink-0 klein pt-1.5">
                     ab <span className="text-lg font-semibold">{euro(w.preis)}</span>
