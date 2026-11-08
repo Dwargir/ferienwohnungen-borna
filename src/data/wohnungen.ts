@@ -14,7 +14,6 @@ export interface Wohnung {
   personen: number;
   groesse?: string;
   schlafzimmer: number;
-  titelbild: string;
   beschreibung: string[];
   raeume: { name: string; text: string }[];
   betten: string[];
@@ -47,7 +46,6 @@ export const wohnungen: Wohnung[] = [
     personen: 3,
     groesse: '50 m²',
     schlafzimmer: 1,
-    titelbild: '/images/simply-good-main.jpg',
     beschreibung: [
       'Die Wohnung liegt ruhig im Erdgeschoss einer Stadtvilla am Stadtrand von Borna. Auf 50 m² ist Platz für bis zu drei Personen.',
       'Über einen Schlüsselsafe können Sie jederzeit selbst einchecken. Fahrräder stehen sicher und kostenlos in der Garage, Leihräder sind vorhanden.',
@@ -79,7 +77,6 @@ export const wohnungen: Wohnung[] = [
     preis: 89,
     personen: 3,
     schlafzimmer: 2,
-    titelbild: '/images/simply-nice-main.jpg',
     beschreibung: [
       'Simply Nice liegt im Dachgeschoss der Stadtvilla und hat zwei getrennte Schlafzimmer – gut, wenn zwei Paare oder eine Familie zusammen verreisen und trotzdem jeder seinen Rückzugsort haben möchte.',
       'Dazu gibt es ein Bad mit Wanne und Dusche, eine ausgestattete Küche und Smart-TV. Bettwäsche und Handtücher sind inklusive.',

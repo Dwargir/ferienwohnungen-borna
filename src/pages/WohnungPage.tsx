@@ -36,7 +36,7 @@ export default function WohnungPage({ id: festeId }: { id?: string }) {
         </div>
       </div>
 
-      <Galerie fotos={fotos.length ? fotos : [{ src: w.titelbild, titel: '' }]} name={w.name} />
+      <Galerie fotos={fotos} name={w.name} />
 
       <div className="mt-12 grid gap-12 lg:grid-cols-[1fr_320px]">
         <div className="min-w-0">
