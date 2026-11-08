@@ -3,6 +3,7 @@ import { Telefon } from './Icons';
 import { KONTAKT } from '../data/wohnungen';
 
 const links = [
+  { to: '/', label: 'Startseite', kurz: 'Start' },
   { to: '/simply-good', label: 'Simply Good', kurz: 'Simply Good' },
   { to: '/simply-nice', label: 'Simply Nice', kurz: 'Simply Nice' },
   { to: '/verfuegbarkeit', label: 'Belegung & Preise', kurz: 'Belegung' },
@@ -45,7 +46,7 @@ export default function Navbar() {
       </div>
 
       {/* Handy: alle Seiten direkt sichtbar, ohne Menü */}
-      <nav className="md:hidden flex justify-between gap-4 px-5 pb-2 klein overflow-x-auto" aria-label="Hauptmenü">
+      <nav className="md:hidden flex justify-between gap-3 px-5 pb-2 text-[0.8125rem] font-sans overflow-x-auto" aria-label="Hauptmenü">
         {links.map((l) => (
           <Link key={l.to} to={l.to} aria-current={pathname === l.to ? 'page' : undefined} className={linkStil(pathname === l.to)}>
             {l.kurz}
