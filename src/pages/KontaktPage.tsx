@@ -42,6 +42,15 @@ export default function KontaktPage() {
   });
   const [fehler, setFehler] = useState('');
   const [gesendet, setGesendet] = useState<'mail' | 'whatsapp' | null>(null);
+  const [kopiert, setKopiert] = useState(false);
+  const kopieren = async () => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setKopiert(true);
+    } catch {
+      setKopiert(false);
+    }
+  };
 
   const setze = (feld: keyof typeof f) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const t = e.target as HTMLInputElement;
@@ -94,9 +103,18 @@ export default function KontaktPage() {
       weg === 'mail'
         ? `mailto:${KONTAKT.email}?subject=${encodeURIComponent(betreff)}&body=${encodeURIComponent(text)}`
         : `https://wa.me/${KONTAKT.whatsapp}?text=${encodeURIComponent(text)}`;
-    if (weg === 'mail') window.location.href = url;
-    else window.open(url, '_blank', 'noopener');
+    // Über einen echten Link öffnen – das klappt auf Handys und in eingebetteten Ansichten zuverlässiger
+    const a = document.createElement('a');
+    a.href = url;
+    if (weg === 'whatsapp') {
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+    }
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
     setGesendet(weg);
+    setKopiert(false);
   };
 
   const beschriftung = 'block klein font-semibold mb-1.5';
@@ -252,7 +270,13 @@ export default function KontaktPage() {
                 ? 'Ihr E-Mail-Programm sollte sich jetzt mit der fertigen Anfrage geöffnet haben. Bitte dort noch auf „Senden“ tippen.'
                 : 'WhatsApp sollte sich jetzt mit der fertigen Nachricht geöffnet haben. Bitte dort noch auf „Senden“ tippen.'}
               <br />
-              Hat sich nichts geöffnet? Schreiben Sie direkt an <a className="verweis" href={`mailto:${KONTAKT.email}`}>{KONTAKT.email}</a> oder rufen Sie an: <a className="verweis" href={KONTAKT.telefonLink}>{KONTAKT.telefon}</a>.
+              Hat sich nichts geöffnet? Kopieren Sie Ihre Anfrage und schicken Sie sie an{' '}
+              <a className="verweis" href={`mailto:${KONTAKT.email}`}>{KONTAKT.email}</a> oder per WhatsApp an {KONTAKT.telefon}. Oder rufen Sie einfach an:{' '}
+              <a className="verweis" href={KONTAKT.telefonLink}>{KONTAKT.telefon}</a>.
+              <pre className="mt-3 whitespace-pre-wrap font-sans bg-white border border-linie rounded-sm p-3 max-h-60 overflow-auto">{text}</pre>
+              <button type="button" onClick={kopieren} className="knopf knopf-hell mt-3 !py-2">
+                {kopiert ? 'Kopiert' : 'Anfrage kopieren'}
+              </button>
             </div>
           )}
           <p className="klein text-schilf">Die Buchung ist erst nach Bestätigung verbindlich.</p>
