@@ -60,7 +60,7 @@ export const wohnungen: Wohnung[] = [
     betten: ['Boxspringbett 180 × 200 cm', 'Sofa als Aufbettung (auf Anfrage)', 'Babybett (auf Anfrage)'],
     ausstattung: [
       'WLAN', 'Smart-TV', 'Kamin', 'Kaffeemaschine', 'Espressomaschine', 'Bettwäsche und Handtücher',
-      'Föhn', 'Bügeleisen', 'Hygieneartikel', 'Parkplatz vor dem Haus', 'Leihräder', 'Fahrradgarage',
+      'Föhn', 'Bügeleisen', 'Hygieneartikel', 'Parkplatz vor dem Haus', 'Leihräder', 'Fahrradgarage', 'Garten', 'Grillplatz',
     ],
     hinweise: [
       'Rauchen bitte nur auf der Terrasse',
@@ -76,24 +76,28 @@ export const wohnungen: Wohnung[] = [
     kurz: 'Zwei getrennte Schlafzimmer',
     preis: 89,
     personen: 3,
+    groesse: '50 m²',
     schlafzimmer: 2,
     beschreibung: [
-      'Simply Nice liegt im Dachgeschoss der Stadtvilla und hat zwei getrennte Schlafzimmer – gut, wenn zwei Paare oder eine Familie zusammen verreisen und trotzdem jeder seinen Rückzugsort haben möchte.',
+      'Simply Nice liegt im Dachgeschoss der Stadtvilla. Auf 50 m² gibt es zwei getrennte Schlafzimmer mit je einem Einzelbett und eine Schlafcouch – Platz für bis zu drei Personen, und jeder hat seinen Rückzugsort.',
       'Dazu gibt es ein Bad mit Wanne und Dusche, eine ausgestattete Küche und Smart-TV. Bettwäsche und Handtücher sind inklusive.',
     ],
     raeume: [
-      { name: 'Schlafzimmer 1', text: 'Bett und Schlafcouch' },
-      { name: 'Schlafzimmer 2', text: 'Bett und Schlafcouch' },
+      { name: 'Schlafzimmer 1', text: 'Einzelbett, Sitzecke mit Schlafcouch' },
+      { name: 'Schlafzimmer 2', text: 'Einzelbett, Sessel, Dachfenster' },
       { name: 'Küche', text: 'Mikrowelle, Toaster, Wasserkocher, Kaffeemaschine, Kaffee und Tee' },
       { name: 'Bad', text: 'Badewanne und Dusche, Duschgel, Föhn' },
     ],
-    betten: ['Je ein Bett pro Schlafzimmer', 'Schlafcouch in beiden Zimmern', 'Babybett (auf Anfrage)'],
+    betten: ['Zwei Einzelbetten, eins pro Schlafzimmer', 'Eine Schlafcouch als drittes Bett', 'Babybett (auf Anfrage)'],
     ausstattung: [
       'WLAN', 'Smart-TV', 'Badewanne und Dusche', 'Kaffeemaschine', 'Bettwäsche und Handtücher',
       'Föhn', 'Bügeleisen', 'Hygieneartikel', 'Parkplatz', 'Fahrradgarage',
     ],
     hinweise: [
+      'Anreise ab 15 Uhr, Abreise bis 11 Uhr',
       'Rauchen in der Wohnung nicht gestattet',
+      'Haustiere sind nicht erlaubt',
+      'Nur über die Treppe erreichbar',
       'Autobahn A72, Abfahrt Borna-Nord',
     ],
   },

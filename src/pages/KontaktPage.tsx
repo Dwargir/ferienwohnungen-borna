@@ -125,7 +125,7 @@ export default function KontaktPage() {
             <div>
               <label htmlFor="erwachsene" className={beschriftung}>Erwachsene</label>
               <select id="erwachsene" className="feld" value={f.erwachsene} onChange={setze('erwachsene')}>
-                {['1', '2', '3', '4'].map((n) => <option key={n}>{n}</option>)}
+                {['1', '2', '3'].map((n) => <option key={n}>{n}</option>)}
               </select>
             </div>
             <div>
