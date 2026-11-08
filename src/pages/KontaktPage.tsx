@@ -185,6 +185,14 @@ export default function KontaktPage() {
 
         <aside className="klein space-y-6">
           <div>
+            <div className="font-semibold">So läuft die Buchung</div>
+            <ol className="mt-2 space-y-1 list-decimal pl-5">
+              <li>Anfrage schicken</li>
+              <li>Bestätigung von {KONTAKT.name} abwarten – erst dann ist die Buchung verbindlich</li>
+              <li>Bei Ankunft den Schlüssel aus dem Schlüsselsafe nehmen</li>
+            </ol>
+          </div>
+          <div>
             <div className="font-semibold">Telefon und WhatsApp</div>
             <a className="verweis text-lg" href={KONTAKT.telefonLink}>{KONTAKT.telefon}</a>
           </div>

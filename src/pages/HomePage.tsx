@@ -1,148 +1,111 @@
 import { Link } from 'react-router-dom';
-import HausSchnitt from '../components/HausSchnitt';
 import KontaktWege from '../components/KontaktWege';
-import { wohnungen, umgebung, euro, ENDREINIGUNG, MINDESTAUFENTHALT } from '../data/wohnungen';
+import { wohnungen, euro } from '../data/wohnungen';
 import { fotosFuer } from '../data/fotos';
+
+/*
+  Startseite: bewusst kurz.
+  1. Begrüßung mit großem Foto
+  2. Die zwei Wohnungen
+  3. Lage in drei Sätzen
+  4. Kontakt
+*/
+
+const lage = [
+  { wert: '5 Min.', text: 'zu Fuß zu Bäcker, Supermarkt und Café' },
+  { wert: '30 Min.', text: 'mit Auto oder S-Bahn nach Leipzig' },
+  { wert: 'Seen', text: 'zum Baden und Radfahren gleich in der Nähe' },
+];
 
 export default function HomePage() {
   return (
     <>
-      {/* Begrüßung mit dem Haus im Querschnitt */}
-      <section className="max-w-6xl mx-auto px-5 sm:px-8 pt-12 sm:pt-20 grid gap-12 md:grid-cols-[1.05fr_1fr] md:items-center">
-        <div>
-          <h1 className="text-[2.4rem] sm:text-[3.25rem]">
-            Zwei Ferienwohnungen in einer Stadtvilla in Borna
+      {/* 1. Begrüßung */}
+      <section className="max-w-6xl mx-auto px-5 sm:px-8 pt-8 sm:pt-14 grid gap-8 md:gap-14 md:grid-cols-[1fr_1.1fr] md:items-center">
+        <div className="order-2 md:order-1">
+          <h1 className="text-[2.5rem] leading-[1.08] sm:text-[3.6rem]">
+            Ferien&shy;wohnungen in Borna
           </h1>
-          <p className="mt-6 text-lg max-w-[34rem]">
-            Unten wohnen Sie mit Kamin und eigener Terrasse, oben unterm Dach mit zwei getrennten Schlafzimmern.
-            Die Seen des Leipziger Neuseenlands sind nah, Leipzig ist in einer halben Stunde erreicht.
+          <p className="mt-5 text-xl max-w-md">
+            Zwei gemütliche Wohnungen in einer Stadtvilla mit Garten – mitten im Leipziger Neuseenland.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <Link to="/verfuegbarkeit" className="knopf">Freie Termine ansehen</Link>
-            <Link to="/kontakt" className="knopf knopf-hell">Anfrage schreiben</Link>
+            <a href="#wohnungen" className="knopf">Wohnungen ansehen</a>
+            <Link to="/verfuegbarkeit" className="knopf knopf-hell">Freie Termine</Link>
           </div>
         </div>
-        <div className="max-w-[460px] w-full md:justify-self-end">
-          <HausSchnitt />
-          <p className="klein text-schilf text-center mt-2">Tippen Sie auf eine Etage, um die Wohnung anzusehen.</p>
+        <div className="order-1 md:order-2">
+          <img
+            src="/images/haus/garten.jpg"
+            alt="Das Haus mit blühenden Hortensien im Garten"
+            className="w-full aspect-[4/3] md:aspect-[4/5] object-cover rounded-md"
+          />
         </div>
       </section>
 
-      {/* Die beiden Wohnungen */}
-      <section className="max-w-6xl mx-auto px-5 sm:px-8 mt-24">
-        <h2 className="text-3xl">Die Wohnungen</h2>
-        <div className="mt-8 grid gap-12 md:grid-cols-2">
+      {/* 2. Die Wohnungen */}
+      <section id="wohnungen" className="max-w-6xl mx-auto px-5 sm:px-8 pt-20 sm:pt-28 scroll-mt-4">
+        <h2 className="text-3xl sm:text-4xl">Unsere zwei Wohnungen</h2>
+        <div className="mt-8 grid gap-10 md:grid-cols-2">
           {wohnungen.map((w) => {
             const bild = fotosFuer(w.id)[0];
             return (
-              <article key={w.id}>
-                <Link to={`/${w.id}`} className="block overflow-hidden rounded-sm bg-linie aspect-[3/2]">
+              <Link key={w.id} to={`/${w.id}`} className="group block no-underline">
+                <div className="overflow-hidden rounded-md bg-linie aspect-[4/3]">
                   {bild && (
-                    <img src={bild.src} alt={`${w.name}: ${bild.titel}`} className="w-full h-full object-cover hover:scale-[1.02] transition-transform duration-300" loading="lazy" />
+                    <img
+                      src={bild.src}
+                      alt={`${w.name}: ${bild.titel}`}
+                      loading="lazy"
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                    />
                   )}
-                </Link>
-                <div className="mt-5 flex items-baseline justify-between gap-4">
-                  <h3 className="text-2xl">
-                    <Link to={`/${w.id}`} className="no-underline hover:underline underline-offset-4">{w.name}</Link>
-                  </h3>
-                  <span className="klein shrink-0">ab <strong>{euro(w.preis)}</strong> pro Nacht</span>
                 </div>
-                <p className="mt-1">{w.etage}. {w.kurz}.</p>
-                <p className="klein mt-2 text-schilf">
-                  Bis {w.personen} Personen, {w.schlafzimmer} Schlafzimmer
-                  {w.groesse ? `, ${w.groesse}` : ''}
-                </p>
-                {w.angebot && <p className="klein mt-3 inline-block bg-sonne/25 px-2 py-1 rounded-sm">{w.angebot}</p>}
-              </article>
+                <div className="mt-5 flex items-start justify-between gap-4">
+                  <div>
+                    <p className="klein text-schilf">{w.etage}</p>
+                    <h3 className="text-2xl sm:text-[1.75rem] group-hover:underline underline-offset-4 decoration-2">{w.name}</h3>
+                    <p className="mt-1">{w.kurz}</p>
+                  </div>
+                  <div className="text-right shrink-0 klein pt-1.5">
+                    ab <span className="text-lg font-semibold">{euro(w.preis)}</span>
+                    <br />
+                    pro Nacht
+                  </div>
+                </div>
+              </Link>
             );
           })}
         </div>
-        <p className="klein mt-8 text-schilf">
-          Endreinigung einmalig {euro(ENDREINIGUNG)}. Mindestaufenthalt {MINDESTAUFENTHALT} Nächte. Bettwäsche und Handtücher sind inklusive.
-        </p>
       </section>
 
-
-      {/* Das Haus */}
-      <section className="max-w-6xl mx-auto px-5 sm:px-8 mt-24">
-        <div className="grid gap-6 md:grid-cols-[1fr_2fr] md:items-end">
+      {/* 3. Lage */}
+      <section className="mt-20 sm:mt-28 bg-papier border-y border-linie">
+        <div className="max-w-6xl mx-auto px-5 sm:px-8 py-14 sm:py-16 grid gap-10 md:grid-cols-[1.1fr_1fr] md:items-center">
+          <div className="grid grid-cols-3 grid-rows-2 gap-3 h-80 sm:h-[440px]">
+            <img src="/images/haus/eingang.jpg" alt="Eingang mit Sitzbank" loading="lazy" className="col-span-2 row-span-2 w-full h-full object-cover rounded-md" />
+            <img src="/images/haus/aussicht.jpg" alt="Blick über die Nachbarschaft" loading="lazy" className="w-full h-full object-cover rounded-md" />
+            <img src="/images/haus/luftbild.jpg" alt="Luftbild mit den Seen am Horizont" loading="lazy" className="w-full h-full object-cover rounded-md" />
+          </div>
           <div>
-            <h2 className="text-3xl">Das Haus</h2>
-            <p className="mt-4 max-w-sm">
-              Eine Stadtvilla in einer ruhigen Straße am Stadtrand, mit Garten, Hortensien und einer Terrasse hinter dem Haus.
-              Geparkt wird direkt vor der Tür.
+            <h2 className="text-3xl sm:text-4xl">Ruhig wohnen, schnell überall</h2>
+            <p className="mt-4 max-w-md">
+              Das Haus liegt in einer ruhigen Straße am Stadtrand von Borna. Geparkt wird direkt vor der Tür.
             </p>
+            <dl className="mt-8 space-y-5">
+              {lage.map((l) => (
+                <div key={l.wert} className="flex items-baseline gap-5">
+                  <dt className="w-24 shrink-0 text-2xl font-semibold">{l.wert}</dt>
+                  <dd>{l.text}</dd>
+                </div>
+              ))}
+            </dl>
           </div>
         </div>
-        <div className="mt-8 grid gap-3 grid-cols-2 md:grid-cols-[1fr_1fr_1.35fr]">
-          {[
-            ['/images/haus/garten.jpg', 'Weg durch den Garten mit Hortensien', 'aspect-[3/4]'],
-            ['/images/haus/eingang.jpg', 'Eingang mit Sitzbank', 'aspect-[3/4]'],
-            ['/images/haus/aussicht.jpg', 'Blick über die Nachbarschaft', 'col-span-2 md:col-span-1 aspect-[4/3] md:aspect-auto'],
-          ].map(([src, text, form]) => (
-            <figure key={src} className={form}>
-              <img src={src} alt={text} loading="lazy" className="w-full h-full object-cover rounded-sm" />
-              <figcaption className="sr-only">{text}</figcaption>
-            </figure>
-          ))}
-        </div>
       </section>
 
-      {/* Umgebung */}
-      <section className="mt-24 bg-papier border-y border-linie">
-        <div className="max-w-6xl mx-auto px-5 sm:px-8 py-16 grid gap-10 md:grid-cols-[1fr_1.4fr]">
-          <div>
-            <h2 className="text-3xl">Rund um Borna</h2>
-            <p className="mt-4 max-w-sm">
-              Borna liegt im Süden von Leipzig, mitten zwischen den gefluteten Tagebauseen. Vieles erreichen Sie mit dem Rad.
-            </p>
-            <figure className="mt-6">
-              <img src="/images/haus/luftbild.jpg" alt="Luftbild: das Haus (blau markiert), dahinter Wald und die Seen" className="w-full aspect-[4/5] object-cover rounded-sm" loading="lazy" />
-              <figcaption className="klein mt-2 text-schilf">Das Haus ist blau markiert, dahinter liegen Wald und Seen.</figcaption>
-            </figure>
-          </div>
-          <dl className="grid gap-x-10 gap-y-6 sm:grid-cols-2 content-start">
-            {umgebung.map((u) => (
-              <div key={u.name} className="border-t border-linie pt-3">
-                <dt className="font-semibold">{u.name}</dt>
-                <dd className="mt-1 text-[0.98rem]">{u.text}</dd>
-              </div>
-            ))}
-          </dl>
-        </div>
-        <div className="max-w-6xl mx-auto px-5 sm:px-8 pb-16 grid gap-3 grid-cols-[1.5fr_1fr]">
-          <figure>
-            <img src="/images/haus/borna-stadtpark.jpg" alt="Park in Borna mit Fontäne und Bergarbeiter-Skulptur" loading="lazy" className="w-full h-56 sm:h-96 object-cover rounded-sm" />
-            <figcaption className="klein mt-2 text-schilf">Im Park in Borna</figcaption>
-          </figure>
-          <figure>
-            <img src="/images/haus/borna-lutherdenkmal.jpg" alt="Luther-Denkmal in Borna" loading="lazy" className="w-full h-56 sm:h-96 object-cover object-[50%_65%] rounded-sm" />
-            <figcaption className="klein mt-2 text-schilf">Luther-Denkmal in der Altstadt</figcaption>
-          </figure>
-        </div>
-      </section>
-
-      {/* So läuft die Buchung – echte Reihenfolge, daher nummeriert */}
-      <section className="max-w-6xl mx-auto px-5 sm:px-8 mt-24">
-        <h2 className="text-3xl">So buchen Sie</h2>
-        <ol className="mt-8 grid gap-8 sm:grid-cols-3">
-          {[
-            ['Anfragen', 'Schicken Sie Ihren Wunschtermin per Telefon, WhatsApp, E-Mail oder über das Anfrageformular.'],
-            ['Bestätigung abwarten', 'Sie bekommen eine Rückmeldung, ob der Termin frei ist. Erst mit dieser Bestätigung ist die Buchung verbindlich.'],
-            ['Anreisen', 'Den Schlüssel holen Sie sich selbst aus dem Schlüsselsafe – auch bei später Ankunft.'],
-          ].map(([titel, text], i) => (
-            <li key={titel} className="flex gap-4">
-              <span className="shrink-0 w-9 h-9 rounded-full border-2 border-see flex items-center justify-center font-semibold">{i + 1}</span>
-              <div>
-                <div className="font-semibold">{titel}</div>
-                <p className="mt-1 text-[0.98rem]">{text}</p>
-              </div>
-            </li>
-          ))}
-        </ol>
-      </section>
-
-      <section className="max-w-6xl mx-auto px-5 sm:px-8 mt-24">
+      {/* 4. Kontakt */}
+      <section className="max-w-6xl mx-auto px-5 sm:px-8 mt-20 sm:mt-28">
         <KontaktWege />
       </section>
     </>
