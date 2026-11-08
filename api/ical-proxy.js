@@ -2,7 +2,7 @@
 // Holt die Belegungskalender von Booking.com, damit der Browser sie anzeigen kann.
 // Aus Sicherheitsgründen werden nur Adressen von ical.booking.com weitergeleitet.
 
-const ERLAUBTE_HOSTS = ['ical.booking.com'];
+const ERLAUBTE_HOSTS = ['ical.booking.com', 'admin.booking.com'];
 
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
