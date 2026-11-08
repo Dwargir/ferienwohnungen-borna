@@ -17,7 +17,7 @@ export interface Belegung {
 // ACHTUNG: Die bisherigen Links meldet Booking.com als ungültig („Invalid Token“) – bitte ersetzen.
 const KALENDER: { wohnung: WohnungId; url: string }[] = [
   { wohnung: 'simply-good', url: 'https://ical.booking.com/v1/export?t=905a3d45-7b7b-4962-a1b1-a065bcdbe995' },
-  { wohnung: 'simply-nice', url: 'https://ical.booking.com/v1/export?t=8a5c57c3-5612-4ae5-bae6-983bed6f59a8' },
+  { wohnung: 'simply-nice', url: 'https://ical.booking.com/v1/export?t=f2d8ec97-c71e-469e-a06b-f6382d4bc212' },
 ];
 
 type Zustand = { belegungen: Belegung[]; status: 'laedt' | 'ok' | 'fehler' };
