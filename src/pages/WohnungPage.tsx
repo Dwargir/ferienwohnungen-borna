@@ -89,7 +89,7 @@ export default function WohnungPage({ id: festeId }: { id?: string }) {
           </div>
         </div>
 
-        <aside className="lg:sticky lg:top-6 self-start">
+        <aside className="lg:sticky lg:top-24 self-start">
           <div className="bg-white border border-linie rounded-md p-6">
             <div className="text-3xl font-semibold tabular-nums">{euro(w.preis)}</div>
             <div className="klein text-schilf">pro Nacht, zzgl. {euro(ENDREINIGUNG)} Endreinigung</div>

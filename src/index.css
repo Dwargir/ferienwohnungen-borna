@@ -21,6 +21,7 @@
 @layer base {
   html {
     -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 6rem; /* Platz für die feste Leiste oben */
   }
   body {
     background-color: var(--color-kalk);

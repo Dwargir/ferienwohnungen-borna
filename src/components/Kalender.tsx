@@ -63,7 +63,13 @@ export default function Kalender({ wohnung, belegungen, status }: Props) {
         </button>
       </div>
 
-      <div className="grid grid-cols-7 gap-1 klein text-center">
+      {status === 'fehler' && (
+        <p role="status" className="klein mb-3 bg-sonne/25 rounded-sm px-3 py-2">
+          Die Belegung kann gerade nicht angezeigt werden. Bitte fragen Sie Ihren Wunschtermin direkt an –
+          per Telefon, WhatsApp oder über das Anfrageformular.
+        </p>
+      )}
+      <div className={`grid grid-cols-7 gap-1 klein text-center ${status !== 'ok' ? 'opacity-30 pointer-events-none select-none' : ''}`} aria-hidden={status !== 'ok'}>
         {WOCHENTAGE.map((t) => (
           <div key={t} className="py-1 text-schilf">{t}</div>
         ))}
@@ -106,11 +112,6 @@ export default function Kalender({ wohnung, belegungen, status }: Props) {
         </span>
       </div>
       {status === 'laedt' && <p className="klein mt-3 text-schilf">Belegung wird geladen …</p>}
-      {status === 'fehler' && (
-        <p className="klein mt-3 text-schilf">
-          Die Belegung konnte gerade nicht geladen werden. Fragen Sie Ihren Wunschtermin gern direkt an.
-        </p>
-      )}
     </div>
   );
 }

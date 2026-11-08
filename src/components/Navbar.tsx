@@ -1,35 +1,31 @@
-import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menue, Schliessen, Telefon } from './Icons';
+import { Telefon } from './Icons';
 import { KONTAKT } from '../data/wohnungen';
 
 const links = [
-  { to: '/simply-good', label: 'Simply Good' },
-  { to: '/simply-nice', label: 'Simply Nice' },
-  { to: '/verfuegbarkeit', label: 'Belegung & Preise' },
-  { to: '/kontakt', label: 'Anfragen' },
+  { to: '/simply-good', label: 'Simply Good', kurz: 'Simply Good' },
+  { to: '/simply-nice', label: 'Simply Nice', kurz: 'Simply Nice' },
+  { to: '/verfuegbarkeit', label: 'Belegung & Preise', kurz: 'Belegung' },
+  { to: '/kontakt', label: 'Anfragen', kurz: 'Anfragen' },
 ];
 
+// Die Leiste bleibt beim Scrollen immer oben sichtbar – am Computer und auf dem Handy.
 export default function Navbar() {
-  const [offen, setOffen] = useState(false);
   const { pathname } = useLocation();
-  useEffect(() => setOffen(false), [pathname]);
+
+  const linkStil = (aktiv: boolean) =>
+    `no-underline whitespace-nowrap py-1 border-b-2 ${aktiv ? 'border-see font-semibold' : 'border-transparent hover:border-linie'}`;
 
   return (
-    <header className="bg-kalk border-b border-linie">
-      <div className="max-w-6xl mx-auto px-5 sm:px-8 h-16 flex items-center justify-between gap-6">
-        <Link to="/" className="no-underline leading-tight">
-          <span className="block font-semibold text-lg">Ferienwohnungen Borna</span>
+    <header className="sticky top-0 z-40 bg-kalk/95 backdrop-blur border-b border-linie">
+      <div className="max-w-6xl mx-auto px-5 sm:px-8 h-14 md:h-16 flex items-center justify-between gap-6">
+        <Link to="/" className="no-underline font-semibold text-lg leading-tight">
+          Ferienwohnungen Borna
         </Link>
 
         <nav className="hidden md:flex items-center gap-7 klein" aria-label="Hauptmenü">
           {links.map((l) => (
-            <Link
-              key={l.to}
-              to={l.to}
-              aria-current={pathname === l.to ? 'page' : undefined}
-              className={`no-underline py-1 border-b-2 ${pathname === l.to ? 'border-see font-semibold' : 'border-transparent hover:border-linie'}`}
-            >
+            <Link key={l.to} to={l.to} aria-current={pathname === l.to ? 'page' : undefined} className={linkStil(pathname === l.to)}>
               {l.label}
             </Link>
           ))}
@@ -39,29 +35,23 @@ export default function Navbar() {
           </a>
         </nav>
 
-        <button
-          type="button"
-          className="md:hidden p-2 -mr-2"
-          onClick={() => setOffen(!offen)}
-          aria-expanded={offen}
-          aria-label={offen ? 'Menü schließen' : 'Menü öffnen'}
+        <a
+          href={KONTAKT.telefonLink}
+          className="md:hidden w-10 h-10 -mr-1 rounded-full bg-see text-white flex items-center justify-center"
+          aria-label={`Anrufen: ${KONTAKT.telefon}`}
         >
-          {offen ? <Schliessen className="w-6 h-6" /> : <Menue className="w-6 h-6" />}
-        </button>
+          <Telefon className="w-5 h-5" />
+        </a>
       </div>
 
-      {offen && (
-        <nav className="md:hidden border-t border-linie px-5 pb-4" aria-label="Hauptmenü">
-          {links.map((l) => (
-            <Link key={l.to} to={l.to} className={`block py-3 border-b border-linie no-underline ${pathname === l.to ? 'font-semibold' : ''}`}>
-              {l.label}
-            </Link>
-          ))}
-          <a href={KONTAKT.telefonLink} className="mt-4 knopf w-full">
-            <Telefon className="w-4 h-4" /> {KONTAKT.telefon} anrufen
-          </a>
-        </nav>
-      )}
+      {/* Handy: alle Seiten direkt sichtbar, ohne Menü */}
+      <nav className="md:hidden flex justify-between gap-4 px-5 pb-2 klein overflow-x-auto" aria-label="Hauptmenü">
+        {links.map((l) => (
+          <Link key={l.to} to={l.to} aria-current={pathname === l.to ? 'page' : undefined} className={linkStil(pathname === l.to)}>
+            {l.kurz}
+          </Link>
+        ))}
+      </nav>
     </header>
   );
 }

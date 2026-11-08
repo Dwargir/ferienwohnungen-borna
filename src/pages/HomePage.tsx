@@ -44,7 +44,7 @@ export default function HomePage() {
       </section>
 
       {/* 2. Die Wohnungen */}
-      <section id="wohnungen" className="max-w-6xl mx-auto px-5 sm:px-8 pt-20 sm:pt-28 scroll-mt-4">
+      <section id="wohnungen" className="max-w-6xl mx-auto px-5 sm:px-8 pt-20 sm:pt-28 scroll-mt-20">
         <h2 className="text-3xl sm:text-4xl">Unsere zwei Wohnungen</h2>
         <div className="mt-8 grid gap-10 md:grid-cols-2">
           {wohnungen.map((w) => {
