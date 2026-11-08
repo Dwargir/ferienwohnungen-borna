@@ -32,16 +32,31 @@ export default async function handler(req, res) {
     const response = await fetch(ziel, {
       headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36' },
     });
-    if (!response.ok) {
-      throw new Error(`Booking.com API error: ${response.status}`);
-    }
     const data = await response.text();
+    if (!response.ok) {
+      return res.status(502).json({
+        error: 'Booking.com hat die Anfrage abgelehnt',
+        status: response.status,
+        antwort: data.slice(0, 300),
+      });
+    }
+    // ?pruefen=1 zeigt eine kurze Zusammenfassung statt der Rohdaten
+    if (req.query.pruefen) {
+      const termine = [...data.matchAll(/DTSTART[^:]*:(\d{8})[\s\S]*?DTEND[^:]*:(\d{8})/g)].map((m) => `${m[1]} bis ${m[2]}`);
+      return res.status(200).json({
+        ok: true,
+        istKalender: data.includes('BEGIN:VCALENDAR'),
+        anzahlTermine: termine.length,
+        termine: termine.slice(0, 20),
+        anfang: data.slice(0, 200),
+      });
+    }
     res.setHeader('Content-Type', 'text/calendar; charset=utf-8');
     // 5 Minuten zwischenspeichern, damit Booking.com nicht bei jedem Besuch gefragt wird
     res.setHeader('Cache-Control', 's-maxage=300, stale-while-revalidate=600');
     res.status(200).send(data);
   } catch (error) {
     console.error('Proxy error:', error);
-    res.status(502).json({ error: 'Failed to fetch iCal data' });
+    res.status(502).json({ error: 'Booking.com nicht erreichbar', details: String(error) });
   }
 }
