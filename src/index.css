@@ -1,26 +1,112 @@
 @import "tailwindcss";
 
+/*
+  Farben und Schriften der Seite.
+  Schriften kommen vom Gerät des Besuchers (keine Google Fonts) –
+  dadurch werden keine Daten an Google übertragen.
+*/
 @theme {
-  --color-deep-blue: #2c5f6e;
-  --color-dark-stone: #4a4a4a;
-  --color-creamy: #fcf8f3;
-  --color-coastal: #7fa9b9;
-  --color-ocean-mist: #b5d1d9;
-  --color-sky-soft: #d6e8f0;
-  --font-family-display: "Playfair Display", serif;
-  --font-family-body: "Inter", sans-serif;
+  --color-kalk: #eef1ec;     /* Hintergrund: gekalkte Wand */
+  --color-papier: #f8f9f6;   /* hellere Flächen */
+  --color-see: #1f3d3a;      /* Schrift, dunkles Seegrün */
+  --color-wasser: #2f6f7e;   /* Links und Knöpfe */
+  --color-schilf: #6e7f4e;   /* Nebentöne */
+  --color-sonne: #e8b93a;    /* sparsam: Licht in den Fenstern */
+  --color-linie: #c9d1c6;    /* feine Linien */
+
+  --font-serif: Charter, "Bitstream Charter", "Sitka Text", Cambria, "Iowan Old Style", Georgia, serif;
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
 @layer base {
-  body {
-    background-color: var(--color-creamy);
-    color: var(--color-dark-stone);
-    font-family: var(--font-family-body);
+  html {
+    -webkit-text-size-adjust: 100%;
   }
-  
-  /* ALLE Überschriften erben diese Farbe – außer sie werden überschrieben */
-  h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-family-display);
-    color: var(--color-deep-blue);
+  body {
+    background-color: var(--color-kalk);
+    color: var(--color-see);
+    font-family: var(--font-serif);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+  }
+  h1, h2, h3 {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  a {
+    color: inherit;
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-sonne);
+    outline-offset: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+}
+
+@layer components {
+  .knopf {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 0.7rem 1.25rem;
+    border-radius: 6px;
+    background: var(--color-see);
+    color: white;
+    text-decoration: none;
+    transition: background-color 0.15s;
+  }
+  .knopf:hover {
+    background: var(--color-wasser);
+  }
+  .knopf-hell {
+    background: transparent;
+    color: var(--color-see);
+    box-shadow: inset 0 0 0 1.5px var(--color-see);
+  }
+  .knopf-hell:hover {
+    background: var(--color-papier);
+  }
+  .verweis {
+    color: var(--color-wasser);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+  .verweis:hover {
+    text-decoration-thickness: 2px;
+  }
+  .klein {
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+  }
+  .feld {
+    width: 100%;
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    background: white;
+    border: 1px solid var(--color-linie);
+    border-radius: 6px;
+    padding: 0.6rem 0.75rem;
+    color: var(--color-see);
+  }
+  .feld:focus {
+    outline: 3px solid color-mix(in srgb, var(--color-sonne) 70%, transparent);
+    outline-offset: 0;
+    border-color: var(--color-see);
   }
 }

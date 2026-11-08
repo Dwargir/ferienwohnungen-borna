@@ -1,84 +1,67 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Home } from 'lucide-react';
+import { Menue, Schliessen, Telefon } from './Icons';
+import { KONTAKT } from '../data/wohnungen';
 
-const navLinks = [
-  { to: '/', label: 'Startseite' },
-  { to: '/verfuegbarkeit', label: 'Verfügbarkeit' },
+const links = [
   { to: '/simply-good', label: 'Simply Good' },
   { to: '/simply-nice', label: 'Simply Nice' },
-  { to: '/kontakt', label: 'Kontakt' },
+  { to: '/verfuegbarkeit', label: 'Belegung & Preise' },
+  { to: '/kontakt', label: 'Anfragen' },
 ];
 
 export default function Navbar() {
-  const [open, setOpen] = useState(false);
+  const [offen, setOffen] = useState(false);
   const { pathname } = useLocation();
+  useEffect(() => setOffen(false), [pathname]);
 
   return (
-    <nav className="sticky top-0 z-50 bg-sand/95 backdrop-blur-sm shadow-sm">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 group">
-            <div className="w-8 h-8 rounded-full bg-terracotta flex items-center justify-center">
-              <Home className="w-4 h-4 text- deep-blue" />
-            </div>
-            <div className="leading-tight">
-              <div className="text-stone-dark font-semibold text-sm tracking-wide" style={{ fontFamily: 'Playfair Display, serif' }}>
-                Ferienwohnungen
-              </div>
-              <div className="text-terracotta text-xs font-medium tracking-widest uppercase">
-                Borna
-              </div>
-            </div>
-          </Link>
+    <header className="bg-kalk border-b border-linie">
+      <div className="max-w-6xl mx-auto px-5 sm:px-8 h-16 flex items-center justify-between gap-6">
+        <Link to="/" className="no-underline leading-tight">
+          <span className="block font-semibold text-lg">Ferienwohnungen Borna</span>
+        </Link>
 
-          {/* Desktop nav */}
-          <div className="hidden md:flex items-center gap-1">
-            {navLinks.map((link) => (
-              <Link
-                key={link.to}
-                to={link.to}
-                className={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
-                  pathname === link.to
-                    ? 'bg-terracotta text- deep-blue'
-                    : 'text-stone hover:text-stone-dark hover:bg-stone-light/30'
-                }`}
-              >
-                {link.label}
-              </Link>
-            ))}
-          </div>
-
-          {/* Mobile burger */}
-          <button
-            onClick={() => setOpen(!open)}
-            className="md:hidden p-2 rounded-md text-stone hover:bg-stone-light/30"
-          >
-            {open ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
-        </div>
-      </div>
-
-      {/* Mobile menu */}
-      {open && (
-        <div className="md:hidden bg-sand border-t border-stone-light px-4 py-3 space-y-1">
-          {navLinks.map((link) => (
+        <nav className="hidden md:flex items-center gap-7 klein" aria-label="Hauptmenü">
+          {links.map((l) => (
             <Link
-              key={link.to}
-              to={link.to}
-              onClick={() => setOpen(false)}
-              className={`block px-4 py-2 rounded-md text-sm font-medium transition-all ${
-                pathname === link.to
-                  ? 'bg-terracotta text- deep-blue'
-                  : 'text-stone hover:text-stone-dark hover:bg-stone-light/30'
-              }`}
+              key={l.to}
+              to={l.to}
+              aria-current={pathname === l.to ? 'page' : undefined}
+              className={`no-underline py-1 border-b-2 ${pathname === l.to ? 'border-see font-semibold' : 'border-transparent hover:border-linie'}`}
             >
-              {link.label}
+              {l.label}
             </Link>
           ))}
-        </div>
+          <a href={KONTAKT.telefonLink} className="flex items-center gap-2 no-underline font-semibold text-wasser">
+            <Telefon className="w-4 h-4" />
+            {KONTAKT.telefon}
+          </a>
+        </nav>
+
+        <button
+          type="button"
+          className="md:hidden p-2 -mr-2"
+          onClick={() => setOffen(!offen)}
+          aria-expanded={offen}
+          aria-label={offen ? 'Menü schließen' : 'Menü öffnen'}
+        >
+          {offen ? <Schliessen className="w-6 h-6" /> : <Menue className="w-6 h-6" />}
+        </button>
+      </div>
+
+      {offen && (
+        <nav className="md:hidden border-t border-linie px-5 pb-4" aria-label="Hauptmenü">
+          {links.map((l) => (
+            <Link key={l.to} to={l.to} className={`block py-3 border-b border-linie no-underline ${pathname === l.to ? 'font-semibold' : ''}`}>
+              {l.label}
+            </Link>
+          ))}
+          <a href={KONTAKT.telefonLink} className="mt-4 knopf w-full">
+            <Telefon className="w-4 h-4" /> {KONTAKT.telefon} anrufen
+          </a>
+        </nav>
       )}
-    </nav>
+    </header>
   );
 }
