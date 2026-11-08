@@ -14,9 +14,9 @@ export interface Belegung {
 
 // Export-Links aus dem Booking.com-Extranet:
 // Preise & Verfügbarkeit → Kalender synchronisieren → Kalender exportieren
-// ACHTUNG: Die bisherigen Links meldet Booking.com als ungültig („Invalid Token“) – bitte ersetzen.
+// Stand: 8. November 2026 (neu erzeugt)
 const KALENDER: { wohnung: WohnungId; url: string }[] = [
-  { wohnung: 'simply-good', url: 'https://ical.booking.com/v1/export?t=905a3d45-7b7b-4962-a1b1-a065bcdbe995' },
+  { wohnung: 'simply-good', url: 'https://ical.booking.com/v1/export?t=2722b773-cfd4-44ce-8308-6ab7a3b139a6' },
   { wohnung: 'simply-nice', url: 'https://ical.booking.com/v1/export?t=f2d8ec97-c71e-469e-a06b-f6382d4bc212' },
 ];
 
