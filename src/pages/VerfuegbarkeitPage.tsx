@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom';
 import Kalender from '../components/Kalender';
 import KontaktWege from '../components/KontaktWege';
-import { useBelegung } from '../data/belegung';
+import { useBelegung, statusFuer } from '../data/belegung';
 import { wohnungen, euro, ENDREINIGUNG, MINDESTAUFENTHALT, PREISSTUFEN, DIREKT_VORTEIL, DIREKT_HINWEIS } from '../data/wohnungen';
 
 export default function VerfuegbarkeitPage() {
-  const { belegungen, status } = useBelegung();
+  const zustand = useBelegung();
+  const { belegungen } = zustand;
 
   return (
     <div className="max-w-6xl mx-auto px-5 sm:px-8 pt-12">
@@ -24,7 +25,7 @@ export default function VerfuegbarkeitPage() {
               <span className="klein">{w.etage}</span>
             </div>
             <div className="mt-4">
-              <Kalender wohnung={w.id} belegungen={belegungen} status={status} />
+              <Kalender wohnung={w.id} belegungen={belegungen} status={statusFuer(zustand, [w.id])} />
             </div>
             <Link to={`/kontakt?wohnung=${w.id}`} className="knopf mt-4">{w.name} anfragen</Link>
           </section>

@@ -20,9 +20,10 @@ const KALENDER: { wohnung: WohnungId; url: string }[] = [
   { wohnung: 'simply-nice', url: 'https://ical.booking.com/v1/export?t=f2d8ec97-c71e-469e-a06b-f6382d4bc212' },
 ];
 
-type Zustand = { belegungen: Belegung[]; status: 'laedt' | 'ok' | 'fehler' };
+export type Status = 'laedt' | 'ok' | 'fehler';
+type Zustand = { belegungen: Belegung[]; status: Status; statusJe: Partial<Record<WohnungId, Status>> };
 
-let zustand: Zustand = { belegungen: [], status: 'laedt' };
+let zustand: Zustand = { belegungen: [], status: 'laedt', statusJe: {} };
 const zuhoerer = new Set<() => void>();
 
 function setze(neu: Zustand) {
@@ -63,8 +64,10 @@ async function lade() {
     }),
   );
   const belegungen = ergebnisse.flatMap((e) => (e.status === 'fulfilled' ? e.value : []));
+  const statusJe: Partial<Record<WohnungId, Status>> = {};
+  ergebnisse.forEach((e, i) => (statusJe[KALENDER[i].wohnung] = e.status === 'fulfilled' ? 'ok' : 'fehler'));
   const fehler = ergebnisse.some((e) => e.status === 'rejected');
-  setze({ belegungen, status: fehler ? 'fehler' : 'ok' });
+  setze({ belegungen, status: fehler ? 'fehler' : 'ok', statusJe });
 }
 
 let gestartet = false;
@@ -83,4 +86,12 @@ export function useBelegung() {
     },
     () => zustand,
   );
+}
+
+// Status für bestimmte Wohnungen: 'ok' nur, wenn alle geladen wurden
+export function statusFuer(z: Zustand, ids: WohnungId[]): Status {
+  const liste = ids.map((id) => z.statusJe[id] ?? (z.status === 'laedt' ? 'laedt' : 'fehler'));
+  if (liste.includes('fehler')) return 'fehler';
+  if (liste.includes('laedt')) return 'laedt';
+  return 'ok';
 }

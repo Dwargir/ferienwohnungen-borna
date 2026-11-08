@@ -6,12 +6,13 @@ import Bewertung from '../components/Bewertung';
 import Preisliste from '../components/Preisliste';
 import { wohnungById, wohnungen, euro, ENDREINIGUNG, MINDESTAUFENTHALT, KONTAKT, DIREKT_VORTEIL, DIREKT_HINWEIS } from '../data/wohnungen';
 import { fotosFuer } from '../data/fotos';
-import { useBelegung } from '../data/belegung';
+import { useBelegung, statusFuer } from '../data/belegung';
 
 export default function WohnungPage({ id: festeId }: { id?: string }) {
   const params = useParams();
   const w = wohnungById(festeId ?? params.id);
-  const { belegungen, status } = useBelegung();
+  const zustand = useBelegung();
+  const { belegungen } = zustand;
   if (!w) return <Navigate to="/" replace />;
 
   const fotos = fotosFuer(w.id);
@@ -88,7 +89,7 @@ export default function WohnungPage({ id: festeId }: { id?: string }) {
 
           <h2 className="text-2xl mt-14" id="belegung">Belegung</h2>
           <div className="mt-4 max-w-md">
-            <Kalender wohnung={w.id} belegungen={belegungen} status={status} />
+            <Kalender wohnung={w.id} belegungen={belegungen} status={statusFuer(zustand, [w.id])} />
           </div>
         </div>
 

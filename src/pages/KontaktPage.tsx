@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { Brief, Sprechblase } from '../components/Icons';
 import { KONTAKT, wohnungen, euro, DIREKT_VORTEIL, MINDESTAUFENTHALT, KAMINHOLZ_PRO_KORB, BABYBETT_PRO_AUFENTHALT } from '../data/wohnungen';
 import DatumsAuswahl, { datumLang } from '../components/DatumsAuswahl';
-import { useBelegung } from '../data/belegung';
+import { useBelegung, statusFuer } from '../data/belegung';
 import { berechne, naechte } from '../data/preisrechner';
 
 /*
@@ -57,7 +57,8 @@ export default function KontaktPage() {
     setF({ ...f, [feld]: t.type === 'checkbox' ? t.checked : t.value });
   };
 
-  const { belegungen, status } = useBelegung();
+  const zustand = useBelegung();
+  const { belegungen } = zustand;
   const gewaehlte = wohnungen.filter((w) => f.wohnung === 'egal' || w.id === f.wohnung);
   // Bei „egal“ ist eine Nacht nur belegt, wenn beide Wohnungen belegt sind
   const nachtBelegt = (iso: string) =>
@@ -144,7 +145,7 @@ export default function KontaktPage() {
               bis={f.abreise}
               onChange={(anreise, abreise) => setF({ ...f, anreise, abreise })}
               nachtBelegt={nachtBelegt}
-              belegungBekannt={status === 'ok'}
+              belegungBekannt={statusFuer(zustand, gewaehlte.map((w) => w.id)) === 'ok'}
             />
             {f.anreise && (
               <p className="mt-3 klein">
