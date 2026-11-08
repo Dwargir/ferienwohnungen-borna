@@ -127,3 +127,11 @@ export function euro(betrag: number) {
 export function note(n: number) {
   return n.toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
 }
+
+// Stärken aus Booking.com für die Startseite – Werte bei Bedarf hier aktualisieren
+export const highlights = [
+  { wert: '9,3', titel: 'Lage', text: 'So bewerten Gäste die ruhige Lage am Stadtrand.' },
+  { wert: '9,4', titel: 'Gastgeberin', text: 'Gäste loben die herzliche Betreuung.' },
+  { wert: 'WLAN', titel: 'Ideal zum Arbeiten', text: 'Kostenloses WLAN und ein ruhiger Platz – gut für Geschäftsreisen.' },
+  { wert: 'Level 2', titel: 'Nachhaltiger reisen', text: 'Ausgezeichnet im Programm von Booking.com.' },
+];

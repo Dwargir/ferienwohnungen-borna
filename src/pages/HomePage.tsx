@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import KontaktWege from '../components/KontaktWege';
 import Bewertung from '../components/Bewertung';
-import { wohnungen, euro } from '../data/wohnungen';
+import { wohnungen, euro, highlights } from '../data/wohnungen';
 import { fotosFuer } from '../data/fotos';
 
 /*
@@ -39,13 +39,27 @@ export default function HomePage() {
           <img
             src="/images/haus/garten.jpg"
             alt="Das Haus mit blühenden Hortensien im Garten"
-            className="w-full aspect-[4/3] md:aspect-[4/5] object-cover rounded-md"
+            className="w-full aspect-[4/3] md:aspect-[5/4] object-cover object-[50%_70%] rounded-md"
           />
         </div>
       </section>
 
+      {/* Stärken laut Booking.com */}
+      <section className="max-w-6xl mx-auto px-5 sm:px-8 mt-12 sm:mt-16" aria-label="Was Gäste auf Booking.com sagen">
+        <ul className="grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-8 border-y border-linie py-8">
+          {highlights.map((h) => (
+            <li key={h.titel}>
+              <div className="text-3xl font-semibold text-wasser tabular-nums">{h.wert}</div>
+              <div className="mt-1 font-semibold">{h.titel}</div>
+              <p className="klein mt-1 text-schilf">{h.text}</p>
+            </li>
+          ))}
+        </ul>
+        <p className="klein mt-3 text-schilf">Bewertungen und Auszeichnungen von Booking.com</p>
+      </section>
+
       {/* 2. Die Wohnungen */}
-      <section id="wohnungen" className="max-w-6xl mx-auto px-5 sm:px-8 pt-20 sm:pt-28 scroll-mt-20">
+      <section id="wohnungen" className="max-w-6xl mx-auto px-5 sm:px-8 pt-16 sm:pt-20 scroll-mt-20">
         <h2 className="text-3xl sm:text-4xl">Unsere zwei Wohnungen</h2>
         <div className="mt-8 grid gap-10 md:grid-cols-2">
           {wohnungen.map((w) => {
