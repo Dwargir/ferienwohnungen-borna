@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Brief, Sprechblase } from '../components/Icons';
-import { KONTAKT, wohnungen, euro, DIREKT_VORTEIL, KAMINHOLZ_PRO_KORB, BABYBETT_PRO_AUFENTHALT } from '../data/wohnungen';
+import { KONTAKT, wohnungen, euro, DIREKT_VORTEIL, MINDESTAUFENTHALT, KAMINHOLZ_PRO_KORB, BABYBETT_PRO_AUFENTHALT } from '../data/wohnungen';
 import DatumsAuswahl, { datumLang } from '../components/DatumsAuswahl';
 import { useBelegung } from '../data/belegung';
-import { berechne } from '../data/preisrechner';
+import { berechne, naechte } from '../data/preisrechner';
 
 /*
   Das Formular verschickt nichts über einen Server.
@@ -91,6 +91,7 @@ export default function KontaktPage() {
     if (!f.name.trim()) return 'Bitte geben Sie Ihren Namen an.';
     if (!f.anreise || !f.abreise) return 'Bitte wählen Sie im Kalender An- und Abreisetag.';
     if (f.abreise <= f.anreise) return 'Der Abreisetag muss nach dem Anreisetag liegen.';
+    if (naechte(f.anreise, f.abreise).length < MINDESTAUFENTHALT) return `Eine Buchung ist erst ab ${MINDESTAUFENTHALT} Nächten möglich.`;
     return '';
   };
 

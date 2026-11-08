@@ -75,7 +75,7 @@ export default function DatumsAuswahl({ von, bis, onChange, nachtBelegt, belegun
     if (s === 'vorbei' || s === 'gesperrt') return;
     if (waehltAbreise && iso > von) {
       if (s === 'zukurz') {
-        setHinweis(`Bitte mindestens ${MINDESTAUFENTHALT} Nächte wählen.`);
+        setHinweis(`Eine Buchung ist erst ab ${MINDESTAUFENTHALT} Nächten möglich. Bitte wählen Sie einen späteren Abreisetag.`);
         return;
       }
       onChange(von, iso);
@@ -97,9 +97,15 @@ export default function DatumsAuswahl({ von, bis, onChange, nachtBelegt, belegun
 
   return (
     <div className="bg-white border border-linie rounded-md p-4 sm:p-5 font-sans">
-      <p className="text-sm mb-3 font-semibold" aria-live="polite">
+      <p className="text-sm font-semibold" aria-live="polite">
         {!von ? 'Tippen Sie auf Ihren Anreisetag.' : waehltAbreise ? 'Jetzt den Abreisetag antippen.' : 'Zeitraum gewählt. Zum Ändern einfach einen neuen Anreisetag antippen.'}
       </p>
+      <p className="text-sm text-schilf mb-3">Mindestaufenthalt: {MINDESTAUFENTHALT} Nächte</p>
+      {hinweis && (
+        <p role="alert" className="mb-3 text-sm font-semibold text-white bg-[#9b2c1f] rounded-sm px-3 py-2">
+          {hinweis}
+        </p>
+      )}
 
       <div className="flex items-center justify-between mb-3">
         <button type="button" onClick={() => blaettern(-1)} disabled={!kannZurueck} aria-label="Vorheriger Monat" className="p-2 -m-2 rounded disabled:opacity-25 hover:bg-kalk">
@@ -142,7 +148,6 @@ export default function DatumsAuswahl({ von, bis, onChange, nachtBelegt, belegun
         })}
       </div>
 
-      {hinweis && <p role="alert" className="mt-3 text-sm font-semibold text-[#9b2c1f]">{hinweis}</p>}
 
       <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm">
         <span className="flex items-center gap-2"><span className="w-4 h-4 rounded-sm bg-papier border border-linie" /> frei</span>
