@@ -29,6 +29,8 @@ export interface Wohnung {
 
 export const ENDREINIGUNG = 25;
 export const MINDESTAUFENTHALT = 2;
+export const KAMINHOLZ_PRO_KORB = 10;   // Euro pro Korb
+export const BABYBETT_PRO_AUFENTHALT = 10; // Euro für den ganzen Aufenthalt
 
 export const KONTAKT = {
   name: 'Uta Finke',
@@ -63,7 +65,7 @@ export const wohnungen: Wohnung[] = [
       { name: 'Bad', text: 'Dusche, Duschgel, Föhn' },
       { name: 'Terrasse', text: 'Mit Sitzgruppe, Rauchen erlaubt' },
     ],
-    betten: ['Boxspringbett 180 × 200 cm', 'Sofa als Aufbettung (auf Anfrage)', 'Babybett (auf Anfrage)'],
+    betten: ['Boxspringbett 180 × 200 cm', 'Sofa als Aufbettung (auf Anfrage)', 'Babybett für 10 € pro Aufenthalt'],
     ausstattung: [
       'WLAN', 'Smart-TV', 'Kamin', 'Kaffeemaschine', 'Espressomaschine', 'Bettwäsche und Handtücher',
       'Föhn', 'Bügeleisen', 'Hygieneartikel', 'Parkplatz vor dem Haus', 'Leihräder', 'Fahrradgarage', 'Garten', 'Grillplatz',
@@ -71,7 +73,7 @@ export const wohnungen: Wohnung[] = [
     hinweise: [
       'Rauchen bitte nur auf der Terrasse',
       'Kostenloser Parkplatz direkt vor der Wohnung',
-      'Kaminholz auf Anfrage',
+      'Kaminholz für 10 € pro Korb',
     ],
     angebot: 'Ab 7 Nächten ist eine Nacht gratis.',
     gratisNachtAb: 7,
@@ -98,7 +100,7 @@ export const wohnungen: Wohnung[] = [
       { name: 'Küche', text: 'Mikrowelle, Toaster, Wasserkocher, Kaffeemaschine, Kaffee und Tee' },
       { name: 'Bad', text: 'Badewanne und Dusche, Duschgel, Föhn' },
     ],
-    betten: ['Zwei Einzelbetten, eins pro Schlafzimmer', 'Eine Schlafcouch als drittes Bett', 'Babybett (auf Anfrage)'],
+    betten: ['Zwei Einzelbetten, eins pro Schlafzimmer', 'Eine Schlafcouch als drittes Bett', 'Babybett für 10 € pro Aufenthalt'],
     ausstattung: [
       'WLAN', 'Smart-TV', 'Badewanne und Dusche', 'Kaffeemaschine', 'Bettwäsche und Handtücher',
       'Föhn', 'Bügeleisen', 'Hygieneartikel', 'Parkplatz', 'Fahrradgarage',

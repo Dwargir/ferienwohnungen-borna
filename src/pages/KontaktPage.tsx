@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Brief, Sprechblase } from '../components/Icons';
-import { KONTAKT, wohnungen, euro, DIREKT_VORTEIL } from '../data/wohnungen';
+import { KONTAKT, wohnungen, euro, DIREKT_VORTEIL, KAMINHOLZ_PRO_KORB, BABYBETT_PRO_AUFENTHALT } from '../data/wohnungen';
 import DatumsAuswahl, { datumLang } from '../components/DatumsAuswahl';
 import { useBelegung } from '../data/belegung';
 import { berechne } from '../data/preisrechner';
@@ -33,6 +33,7 @@ export default function KontaktPage() {
     erwachsene: '2',
     kinder: '0',
     kaminholz: false,
+    koerbe: '1',
     babybett: false,
     aufbettung: false,
     name: '',
@@ -53,9 +54,9 @@ export default function KontaktPage() {
   const nachtBelegt = (iso: string) =>
     gewaehlte.every((w) => belegungen.some((b) => b.wohnung === w.id && b.von <= iso && iso < b.bis));
   const kaminholzMoeglich = gewaehlte.some((w) => w.kaminholz);
-  const preise = f.anreise && f.abreise ? gewaehlte.map((w) => ({ w, r: berechne(w, f.anreise, f.abreise) })) : [];
+  const preise = f.anreise && f.abreise ? gewaehlte.map((w) => ({ w, r: berechne(w, f.anreise, f.abreise, { koerbeKaminholz: kaminholzMoeglich && f.kaminholz ? Number(f.koerbe) : 0, babybett: f.babybett }) })) : [];
   const wohnungText = auswahl.find((a) => a.wert === f.wohnung)?.text ?? '';
-  const extras = [kaminholzMoeglich && f.kaminholz && 'Kaminholz', f.babybett && 'Babybett', f.aufbettung && 'Aufbettung'].filter(Boolean).join(', ');
+  const extras = [kaminholzMoeglich && f.kaminholz && `Kaminholz (${f.koerbe} ${f.koerbe === '1' ? 'Korb' : 'Körbe'})`, f.babybett && 'Babybett', f.aufbettung && 'Aufbettung'].filter(Boolean).join(', ');
 
   const text = [
     `Hallo Frau Finke,`,
@@ -156,6 +157,12 @@ export default function KontaktPage() {
                         <dd className="tabular-nums">−{euro(r.rabatt)}</dd>
                       </div>
                     )}
+                    {r.zusatz.map((z) => (
+                      <div key={z.text} className="flex justify-between gap-4 py-1.5">
+                        <dt>{z.text}</dt>
+                        <dd className="tabular-nums">{euro(z.betrag)}</dd>
+                      </div>
+                    ))}
                     <div className="flex justify-between gap-4 py-1.5">
                       <dt>Endreinigung</dt>
                       <dd className="tabular-nums">{euro(r.reinigung)}</dd>
@@ -188,15 +195,31 @@ export default function KontaktPage() {
 
           <fieldset>
             <legend className={beschriftung}>Zusätzlich gewünscht</legend>
-            <div className="flex flex-wrap gap-x-6 gap-y-2">
-              {([['kaminholz', 'Kaminholz'], ['babybett', 'Babybett'], ['aufbettung', 'Aufbettung']] as const)
-                .filter(([k]) => k !== 'kaminholz' || kaminholzMoeglich)
-                .map(([k, l]) => (
-                <label key={k} className="flex items-center gap-2 cursor-pointer">
-                  <input type="checkbox" className="w-4 h-4 accent-see" checked={f[k]} onChange={setze(k)} />
-                  {l}
-                </label>
-              ))}
+            <div className="space-y-3">
+              {kaminholzMoeglich && (
+                <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input type="checkbox" className="w-4 h-4 accent-see" checked={f.kaminholz} onChange={setze('kaminholz')} />
+                    Kaminholz <span className="klein text-schilf">({KAMINHOLZ_PRO_KORB} € pro Korb{f.wohnung === 'egal' ? ', nur Simply Good' : ''})</span>
+                  </label>
+                  {f.kaminholz && (
+                    <label className="flex items-center gap-2 klein">
+                      Anzahl Körbe
+                      <select className="feld !w-20 !py-1" value={f.koerbe} onChange={setze('koerbe')}>
+                        {['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'].map((n) => <option key={n}>{n}</option>)}
+                      </select>
+                    </label>
+                  )}
+                </div>
+              )}
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" className="w-4 h-4 accent-see" checked={f.babybett} onChange={setze('babybett')} />
+                Babybett <span className="klein text-schilf">({BABYBETT_PRO_AUFENTHALT} € für den ganzen Aufenthalt)</span>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" className="w-4 h-4 accent-see" checked={f.aufbettung} onChange={setze('aufbettung')} />
+                Aufbettung <span className="klein text-schilf">(auf Anfrage)</span>
+              </label>
             </div>
           </fieldset>
 

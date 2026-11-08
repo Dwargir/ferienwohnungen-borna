@@ -71,7 +71,7 @@ export default function VerfuegbarkeitPage() {
       <ul className="mt-6 klein text-schilf space-y-1 max-w-3xl">
         <li>Bettwäsche und Handtücher sind im Preis enthalten.</li>
         <li>Mindestaufenthalt {MINDESTAUFENTHALT} Nächte.</li>
-        <li>Babybett und Aufbettung gibt es auf Anfrage, Kaminholz für Simply Good ebenfalls.</li>
+        <li>Babybett: 10 € für den ganzen Aufenthalt. Kaminholz (Simply Good): 10 € pro Korb. Aufbettung auf Anfrage.</li>
         <li>Die Buchung ist erst nach schriftlicher Bestätigung verbindlich.</li>
       </ul>
 

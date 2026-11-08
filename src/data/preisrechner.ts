@@ -5,7 +5,7 @@
   - Weihnachtsnächte (siehe WEIHNACHTSNAECHTE): Weihnachtspreis
   - alle anderen Nächte: Preis Sonntag bis Donnerstag
 */
-import { ENDREINIGUNG } from './wohnungen';
+import { ENDREINIGUNG, KAMINHOLZ_PRO_KORB, BABYBETT_PRO_AUFENTHALT } from './wohnungen';
 import type { Wohnung } from './wohnungen';
 
 // Nächte mit Weihnachtspreis, als Monat-Tag (Nacht vom 24. auf den 25. = '12-24')
@@ -38,7 +38,12 @@ export function nachtPreis(w: Wohnung, iso: string) {
   return { stufe: 'werktags' as const, preis: w.preise.werktags };
 }
 
-export function berechne(w: Wohnung, von: string, bis: string) {
+export interface Extras {
+  koerbeKaminholz: number;
+  babybett: boolean;
+}
+
+export function berechne(w: Wohnung, von: string, bis: string, extras: Extras = { koerbeKaminholz: 0, babybett: false }) {
   const liste = naechte(von, bis).map((n) => ({ nacht: n, ...nachtPreis(w, n) }));
   const zeilen = (['werktags', 'wochenende', 'weihnachten'] as const)
     .map((stufe) => {
@@ -48,11 +53,21 @@ export function berechne(w: Wohnung, von: string, bis: string) {
     .filter((z) => z.anzahl > 0);
   const uebernachtung = liste.reduce((a, n) => a + n.preis, 0);
   const rabatt = w.gratisNachtAb && liste.length >= w.gratisNachtAb ? Math.min(...liste.map((n) => n.preis)) : 0;
+  const zusatz: { text: string; betrag: number }[] = [];
+  if (w.kaminholz && extras.koerbeKaminholz > 0) {
+    zusatz.push({
+      text: `Kaminholz, ${extras.koerbeKaminholz} ${extras.koerbeKaminholz === 1 ? 'Korb' : 'Körbe'} × ${KAMINHOLZ_PRO_KORB} €`,
+      betrag: extras.koerbeKaminholz * KAMINHOLZ_PRO_KORB,
+    });
+  }
+  if (extras.babybett) zusatz.push({ text: 'Babybett, für den ganzen Aufenthalt', betrag: BABYBETT_PRO_AUFENTHALT });
+  const zusatzSumme = zusatz.reduce((a, z) => a + z.betrag, 0);
   return {
     anzahl: liste.length,
     zeilen,
     rabatt,
+    zusatz,
     reinigung: ENDREINIGUNG,
-    gesamt: uebernachtung - rabatt + ENDREINIGUNG,
+    gesamt: uebernachtung - rabatt + zusatzSumme + ENDREINIGUNG,
   };
 }
