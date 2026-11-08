@@ -4,7 +4,7 @@ import Kalender from '../components/Kalender';
 import { Telefon } from '../components/Icons';
 import Bewertung from '../components/Bewertung';
 import Preisliste from '../components/Preisliste';
-import { wohnungById, wohnungen, euro, ENDREINIGUNG, MINDESTAUFENTHALT, KONTAKT, DIREKT_VORTEIL } from '../data/wohnungen';
+import { wohnungById, wohnungen, euro, ENDREINIGUNG, MINDESTAUFENTHALT, KONTAKT, DIREKT_VORTEIL, DIREKT_HINWEIS } from '../data/wohnungen';
 import { fotosFuer } from '../data/fotos';
 import { useBelegung } from '../data/belegung';
 
@@ -98,6 +98,7 @@ export default function WohnungPage({ id: festeId }: { id?: string }) {
             <div className="mt-2"><Preisliste w={w} /></div>
             <div className="klein text-schilf mt-2">zzgl. {euro(ENDREINIGUNG)} Endreinigung</div>
             <p className="klein mt-4 font-semibold text-wasser">{DIREKT_VORTEIL}</p>
+            <p className="klein mt-1 text-schilf">{DIREKT_HINWEIS}</p>
             {w.angebot && <p className="klein mt-4 bg-sonne/25 px-3 py-2 rounded-sm">{w.angebot}</p>}
             <Link to={`/kontakt?wohnung=${w.id}`} className="knopf w-full mt-6">Diese Wohnung anfragen</Link>
             <a href={KONTAKT.telefonLink} className="knopf knopf-hell w-full mt-3">

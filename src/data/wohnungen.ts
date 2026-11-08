@@ -146,4 +146,5 @@ export const PREISSTUFEN = [
   { key: 'weihnachten', name: 'Weihnachten' },
 ] as const;
 
-export const DIREKT_VORTEIL = 'Direkt bei uns buchen ist günstiger als über Booking.com.';
+export const DIREKT_VORTEIL = 'Profitieren Sie von unseren Preisen für Direktbuchungen.';
+export const DIREKT_HINWEIS = 'Diese Preise gelten, wenn Sie direkt bei uns anfragen und buchen – per Telefon, WhatsApp oder E-Mail.';

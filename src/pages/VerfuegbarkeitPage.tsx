@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import Kalender from '../components/Kalender';
 import KontaktWege from '../components/KontaktWege';
 import { useBelegung } from '../data/belegung';
-import { wohnungen, euro, ENDREINIGUNG, MINDESTAUFENTHALT, PREISSTUFEN, DIREKT_VORTEIL } from '../data/wohnungen';
+import { wohnungen, euro, ENDREINIGUNG, MINDESTAUFENTHALT, PREISSTUFEN, DIREKT_VORTEIL, DIREKT_HINWEIS } from '../data/wohnungen';
 
 export default function VerfuegbarkeitPage() {
   const { belegungen, status } = useBelegung();
@@ -33,6 +33,7 @@ export default function VerfuegbarkeitPage() {
 
       <h2 className="text-3xl mt-24">Preise pro Nacht</h2>
       <p className="mt-3 text-lg font-semibold text-wasser">{DIREKT_VORTEIL}</p>
+      <p className="mt-1 max-w-[38rem]">{DIREKT_HINWEIS}</p>
       <div className="mt-6 overflow-x-auto">
         <table className="w-full max-w-3xl text-left border-collapse">
           <thead>
