@@ -1,7 +1,10 @@
 import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { Brief, Sprechblase } from '../components/Icons';
-import { KONTAKT, wohnungen } from '../data/wohnungen';
+import { KONTAKT, wohnungen, euro, DIREKT_VORTEIL } from '../data/wohnungen';
+import DatumsAuswahl, { datumLang } from '../components/DatumsAuswahl';
+import { useBelegung } from '../data/belegung';
+import { berechne } from '../data/preisrechner';
 
 /*
   Das Formular verschickt nichts über einen Server.
@@ -44,9 +47,15 @@ export default function KontaktPage() {
     setF({ ...f, [feld]: t.type === 'checkbox' ? t.checked : t.value });
   };
 
-  const heute = new Date().toISOString().slice(0, 10);
+  const { belegungen, status } = useBelegung();
+  const gewaehlte = wohnungen.filter((w) => f.wohnung === 'egal' || w.id === f.wohnung);
+  // Bei „egal“ ist eine Nacht nur belegt, wenn beide Wohnungen belegt sind
+  const nachtBelegt = (iso: string) =>
+    gewaehlte.every((w) => belegungen.some((b) => b.wohnung === w.id && b.von <= iso && iso < b.bis));
+  const kaminholzMoeglich = gewaehlte.some((w) => w.kaminholz);
+  const preise = f.anreise && f.abreise ? gewaehlte.map((w) => ({ w, r: berechne(w, f.anreise, f.abreise) })) : [];
   const wohnungText = auswahl.find((a) => a.wert === f.wohnung)?.text ?? '';
-  const extras = [f.kaminholz && 'Kaminholz', f.babybett && 'Babybett', f.aufbettung && 'Aufbettung'].filter(Boolean).join(', ');
+  const extras = [kaminholzMoeglich && f.kaminholz && 'Kaminholz', f.babybett && 'Babybett', f.aufbettung && 'Aufbettung'].filter(Boolean).join(', ');
 
   const text = [
     `Hallo Frau Finke,`,
@@ -57,6 +66,7 @@ export default function KontaktPage() {
     `Anreise: ${datumDeutsch(f.anreise)}`,
     `Abreise: ${datumDeutsch(f.abreise)}`,
     `Personen: ${f.erwachsene} Erwachsene${f.kinder !== '0' ? `, ${f.kinder} Kinder` : ''}`,
+    ...preise.map(({ w, r }) => `Preis laut Website (${w.name}): ${euro(r.gesamt)} für ${r.anzahl} Nächte inkl. Endreinigung`),
     extras ? `Zusätzlich: ${extras}` : null,
     f.nachricht.trim() ? `\n${f.nachricht.trim()}` : null,
     ``,
@@ -69,7 +79,7 @@ export default function KontaktPage() {
 
   const pruefen = () => {
     if (!f.name.trim()) return 'Bitte geben Sie Ihren Namen an.';
-    if (!f.anreise || !f.abreise) return 'Bitte wählen Sie An- und Abreisetag.';
+    if (!f.anreise || !f.abreise) return 'Bitte wählen Sie im Kalender An- und Abreisetag.';
     if (f.abreise <= f.anreise) return 'Der Abreisetag muss nach dem Anreisetag liegen.';
     return '';
   };
@@ -102,24 +112,64 @@ export default function KontaktPage() {
         <form className="space-y-6 max-w-2xl" onSubmit={(e) => { e.preventDefault(); senden('mail'); }} noValidate>
           <div>
             <label htmlFor="wohnung" className={beschriftung}>Wohnung</label>
-            <select id="wohnung" className="feld" value={f.wohnung} onChange={setze('wohnung')}>
+            <select id="wohnung" className="feld" value={f.wohnung} onChange={(e) => setF({ ...f, wohnung: e.target.value, anreise: '', abreise: '' })}>
               {auswahl.map((a) => <option key={a.wert} value={a.wert}>{a.text}</option>)}
             </select>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label htmlFor="anreise" className={beschriftung}>Anreise</label>
-              <input id="anreise" type="date" className="feld" min={heute} value={f.anreise} onChange={setze('anreise')} required />
+          <fieldset>
+            <legend className={beschriftung}>Anreise und Abreise</legend>
+            <DatumsAuswahl
+              von={f.anreise}
+              bis={f.abreise}
+              onChange={(anreise, abreise) => setF({ ...f, anreise, abreise })}
+              nachtBelegt={nachtBelegt}
+              belegungBekannt={status === 'ok'}
+            />
+            {f.anreise && (
+              <p className="mt-3 klein">
+                <strong>Anreise:</strong> {datumLang(f.anreise)}
+                {f.abreise && <><br /><strong>Abreise:</strong> {datumLang(f.abreise)}</>}
+              </p>
+            )}
+          </fieldset>
+
+          {preise.length > 0 && (
+            <div className="bg-papier border border-linie rounded-md p-5" aria-live="polite">
+              <div className="font-semibold text-lg">Ihr Preis</div>
+              {preise.map(({ w, r }) => (
+                <div key={w.id} className="mt-4">
+                  {preise.length > 1 && <div className="font-semibold">{w.name}</div>}
+                  <dl className="klein divide-y divide-linie">
+                    {r.zeilen.map((z) => (
+                      <div key={z.stufe} className="flex justify-between gap-4 py-1.5">
+                        <dt>
+                          {z.anzahl} {z.anzahl === 1 ? 'Nacht' : 'Nächte'} × {euro(z.einzel)}
+                          <span className="text-schilf"> ({z.stufe === 'werktags' ? 'So–Do' : z.stufe === 'wochenende' ? 'Fr und Sa' : 'Weihnachten'})</span>
+                        </dt>
+                        <dd className="tabular-nums">{euro(z.summe)}</dd>
+                      </div>
+                    ))}
+                    {r.rabatt > 0 && (
+                      <div className="flex justify-between gap-4 py-1.5 text-wasser font-semibold">
+                        <dt>Eine Nacht gratis (ab {w.gratisNachtAb} Nächten)</dt>
+                        <dd className="tabular-nums">−{euro(r.rabatt)}</dd>
+                      </div>
+                    )}
+                    <div className="flex justify-between gap-4 py-1.5">
+                      <dt>Endreinigung</dt>
+                      <dd className="tabular-nums">{euro(r.reinigung)}</dd>
+                    </div>
+                    <div className="flex justify-between gap-4 pt-2 text-base font-semibold border-t-2 border-see">
+                      <dt>Gesamt für {r.anzahl} Nächte</dt>
+                      <dd className="tabular-nums">{euro(r.gesamt)}</dd>
+                    </div>
+                  </dl>
+                </div>
+              ))}
+              <p className="klein mt-3 text-wasser font-semibold">{DIREKT_VORTEIL}</p>
             </div>
-            <div>
-              <label htmlFor="abreise" className={beschriftung}>Abreise</label>
-              <input id="abreise" type="date" className="feld" min={f.anreise || heute} value={f.abreise} onChange={setze('abreise')} required />
-            </div>
-          </div>
-          <p className="klein -mt-3 text-schilf">
-            Freie Termine sehen Sie unter <Link to="/verfuegbarkeit" className="verweis">Belegung</Link>.
-          </p>
+          )}
 
           <div className="grid grid-cols-2 gap-4">
             <div>
@@ -139,7 +189,9 @@ export default function KontaktPage() {
           <fieldset>
             <legend className={beschriftung}>Zusätzlich gewünscht</legend>
             <div className="flex flex-wrap gap-x-6 gap-y-2">
-              {([['kaminholz', 'Kaminholz'], ['babybett', 'Babybett'], ['aufbettung', 'Aufbettung']] as const).map(([k, l]) => (
+              {([['kaminholz', 'Kaminholz'], ['babybett', 'Babybett'], ['aufbettung', 'Aufbettung']] as const)
+                .filter(([k]) => k !== 'kaminholz' || kaminholzMoeglich)
+                .map(([k, l]) => (
                 <label key={k} className="flex items-center gap-2 cursor-pointer">
                   <input type="checkbox" className="w-4 h-4 accent-see" checked={f[k]} onChange={setze(k)} />
                   {l}

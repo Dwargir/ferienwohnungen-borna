@@ -21,6 +21,8 @@ export interface Wohnung {
   ausstattung: string[];
   hinweise: string[];
   angebot?: string;
+  gratisNachtAb?: number; // ab so vielen Nächten ist die günstigste Nacht gratis
+  kaminholz: boolean;
   // Gästebewertung auf Booking.com – bei Bedarf hier aktualisieren
   bewertung: { note: number; anzahl: number; link: string };
 }
@@ -72,6 +74,8 @@ export const wohnungen: Wohnung[] = [
       'Kaminholz auf Anfrage',
     ],
     angebot: 'Ab 7 Nächten ist eine Nacht gratis.',
+    gratisNachtAb: 7,
+    kaminholz: true,
     bewertung: { note: 8.9, anzahl: 61, link: 'https://www.booking.com/hotel/de/simply-good-appartment.de.html' },
   },
   {
@@ -106,6 +110,7 @@ export const wohnungen: Wohnung[] = [
       'Nur über die Treppe erreichbar',
       'Autobahn A72, Abfahrt Borna-Nord',
     ],
+    kaminholz: false,
     bewertung: { note: 8.7, anzahl: 29, link: 'https://www.booking.com/hotel/de/simply-nice-appartment.de.html' },
   },
 ];
