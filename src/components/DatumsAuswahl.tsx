@@ -8,11 +8,17 @@ import { MINDESTAUFENTHALT } from '../data/wohnungen';
   Belegte Nächte sind gesperrt. Man tippt zuerst die Anreise, dann die Abreise.
 */
 
+export interface WohnungsBelegung {
+  name: string;
+  belegt: (iso: string) => boolean;
+}
+
 interface Props {
   von: string;
   bis: string;
   onChange: (von: string, bis: string) => void;
-  nachtBelegt: (iso: string) => boolean;
+  // eine oder mehrere Wohnungen; bei mehreren muss mindestens eine durchgehend frei sein
+  wohnungen: WohnungsBelegung[];
   belegungBekannt: boolean;
 }
 
@@ -38,7 +44,11 @@ export function datumLang(iso: string) {
   return ausIso(iso).toLocaleDateString('de-DE', { weekday: 'short', day: 'numeric', month: 'long', year: 'numeric' });
 }
 
-export default function DatumsAuswahl({ von, bis, onChange, nachtBelegt, belegungBekannt }: Props) {
+export default function DatumsAuswahl({ von, bis, onChange, wohnungen, belegungBekannt }: Props) {
+  // Nacht ist belegt, wenn keine Wohnung frei ist; „teilweise“, wenn nur ein Teil frei ist
+  const nachtBelegt = (iso: string) => wohnungen.every((w) => w.belegt(iso));
+  const freieAm = (iso: string) => wohnungen.filter((w) => !w.belegt(iso));
+  const teilweise = (iso: string) => wohnungen.length > 1 && freieAm(iso).length > 0 && freieAm(iso).length < wohnungen.length;
   const heute = isoDatum(new Date());
   const start = von ? ausIso(von) : new Date();
   const [monat, setMonat] = useState({ j: start.getFullYear(), m: start.getMonth() });
@@ -49,13 +59,24 @@ export default function DatumsAuswahl({ von, bis, onChange, nachtBelegt, belegun
   // Erste belegte Nacht nach der Anreise: bis dahin kann man höchstens bleiben
   let spaetesteAbreise: string | null = null;
   if (waehltAbreise) {
-    for (let i = 0; i < 400; i++) {
-      const n = plusTage(von, i);
-      if (nachtBelegt(n)) {
-        spaetesteAbreise = n;
+    let spaeteste = '';
+    for (const w of wohnungen) {
+      if (w.belegt(von)) continue;
+      let ende: string | null = null;
+      for (let i = 1; i < 400; i++) {
+        const n = plusTage(von, i);
+        if (w.belegt(n)) {
+          ende = n;
+          break;
+        }
+      }
+      if (ende === null) {
+        spaeteste = '9999-12-31';
         break;
       }
+      if (ende > spaeteste) spaeteste = ende;
     }
+    spaetesteAbreise = spaeteste && spaeteste !== '9999-12-31' ? spaeteste : null;
   }
 
   const status = (iso: string) => {
@@ -126,6 +147,7 @@ export default function DatumsAuswahl({ von, bis, onChange, nachtBelegt, belegun
           const istVon = iso === von;
           const istBis = iso === bis;
           const imZeitraum = von && bis && iso > von && iso < bis;
+          const nurTeil = s !== 'vorbei' && s !== 'gesperrt' && teilweise(iso);
           let stil = 'bg-papier hover:bg-sonne/30';
           if (s === 'vorbei' || s === 'gesperrt') stil = 'text-see/25 cursor-default';
           else if (s === 'belegt') stil = 'bg-linie/60 text-see/40 line-through cursor-not-allowed';
@@ -139,7 +161,9 @@ export default function DatumsAuswahl({ von, bis, onChange, nachtBelegt, belegun
               onClick={() => tippen(iso)}
               disabled={s === 'vorbei' || s === 'gesperrt'}
               aria-pressed={istVon || istBis}
-              aria-label={`${datumLang(iso)}${s === 'belegt' ? ', belegt' : ''}${istVon ? ', Anreise' : ''}${istBis ? ', Abreise' : ''}`}
+              style={nurTeil && !istVon && !istBis && !imZeitraum ? { background: 'linear-gradient(135deg, var(--color-papier) 50%, var(--color-linie) 50%)' } : undefined}
+              title={nurTeil ? `Nur ${freieAm(iso).map((w) => w.name).join(' und ')} frei` : undefined}
+              aria-label={`${datumLang(iso)}${s === 'belegt' ? ', belegt' : ''}${nurTeil ? `, nur ${freieAm(iso).map((w) => w.name).join(' und ')} frei` : ''}${istVon ? ', Anreise' : ''}${istBis ? ', Abreise' : ''}`}
               className={`h-10 rounded-sm tabular-nums ${stil} ${iso === heute ? 'ring-2 ring-sonne' : ''}`}
             >
               {d.getDate()}
@@ -152,6 +176,11 @@ export default function DatumsAuswahl({ von, bis, onChange, nachtBelegt, belegun
       <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm">
         <span className="flex items-center gap-2"><span className="w-4 h-4 rounded-sm bg-papier border border-linie" /> frei</span>
         <span className="flex items-center gap-2"><span className="w-4 h-4 rounded-sm bg-linie/60" /> belegt</span>
+        {wohnungen.length > 1 && (
+          <span className="flex items-center gap-2">
+            <span className="w-4 h-4 rounded-sm border border-linie" style={{ background: 'linear-gradient(135deg, var(--color-papier) 50%, var(--color-linie) 50%)' }} /> nur eine Wohnung frei
+          </span>
+        )}
         <span className="flex items-center gap-2"><span className="w-4 h-4 rounded-sm bg-see" /> Ihre Auswahl</span>
       </div>
       {!belegungBekannt && (

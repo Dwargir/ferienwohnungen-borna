@@ -43,20 +43,55 @@ function datum(zeile: string) {
   return m ? `${m[1]}-${m[2]}-${m[3]}` : null;
 }
 
+function plusTage(iso: string, n: number) {
+  const [j, m, t] = iso.split('-').map(Number);
+  const d = new Date(Date.UTC(j, m - 1, t + n));
+  return d.toISOString().slice(0, 10);
+}
+
+// DURATION wie P1D, P3D oder P1W in Tage umrechnen
+function dauerInTagen(zeile: string) {
+  const m = zeile.match(/P(?:(\d+)W)?(?:(\d+)D)?/);
+  if (!m) return 1;
+  return Math.max(1, Number(m[1] ?? 0) * 7 + Number(m[2] ?? 0));
+}
+
+/*
+  Liest einen Booking.com-Kalender.
+  Robust gegen verschiedene Formen:
+  - Einträge ohne Enddatum (z. B. einzelne geschlossene Tage) gelten für eine Nacht
+  - Einträge mit DURATION statt Enddatum
+  - umgebrochene Zeilen
+  Jeder Eintrag zählt als belegt – egal ob gebucht oder geschlossen.
+*/
 export function leseICal(text: string, wohnung: WohnungId): Belegung[] {
+  const zeilen = text.replace(/\r?\n[ \t]/g, '').split(/\r?\n/);
   const ergebnis: Belegung[] = [];
+  let imEintrag = false;
   let von: string | null = null;
   let bis: string | null = null;
-  for (const roh of text.split(/\r?\n/)) {
+  let dauer: number | null = null;
+  for (const roh of zeilen) {
     const zeile = roh.trim();
-    if (zeile === 'BEGIN:VEVENT') {
+    const name = zeile.split(/[;:]/)[0].toUpperCase();
+    if (zeile.toUpperCase() === 'BEGIN:VEVENT') {
+      imEintrag = true;
       von = bis = null;
-    } else if (zeile.startsWith('DTSTART')) {
+      dauer = null;
+    } else if (!imEintrag) {
+      continue;
+    } else if (name === 'DTSTART') {
       von = datum(zeile);
-    } else if (zeile.startsWith('DTEND')) {
+    } else if (name === 'DTEND') {
       bis = datum(zeile);
-    } else if (zeile === 'END:VEVENT' && von && bis) {
-      ergebnis.push({ wohnung, von, bis });
+    } else if (name === 'DURATION') {
+      dauer = dauerInTagen(zeile);
+    } else if (zeile.toUpperCase() === 'END:VEVENT') {
+      imEintrag = false;
+      if (!von) continue;
+      let ende = bis ?? plusTage(von, dauer ?? 1);
+      if (ende <= von) ende = plusTage(von, 1);
+      ergebnis.push({ wohnung, von, bis: ende });
     }
   }
   return ergebnis;

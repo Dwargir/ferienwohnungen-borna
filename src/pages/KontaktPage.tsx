@@ -60,12 +60,16 @@ export default function KontaktPage() {
   const zustand = useBelegung();
   const { belegungen } = zustand;
   const gewaehlte = wohnungen.filter((w) => f.wohnung === 'egal' || w.id === f.wohnung);
-  // Bei „egal“ ist eine Nacht nur belegt, wenn beide Wohnungen belegt sind
-  const nachtBelegt = (iso: string) =>
-    gewaehlte.every((w) => belegungen.some((b) => b.wohnung === w.id && b.von <= iso && iso < b.bis));
-  const kaminholzMoeglich = gewaehlte.some((w) => w.kaminholz);
-  const preise = f.anreise && f.abreise ? gewaehlte.map((w) => ({ w, r: berechne(w, f.anreise, f.abreise, { koerbeKaminholz: kaminholzMoeglich && f.kaminholz ? Number(f.koerbe) : 0, babybett: f.babybett }) })) : [];
-  const wohnungText = auswahl.find((a) => a.wert === f.wohnung)?.text ?? '';
+  const belegtFuer = (id: string) => (iso: string) => belegungen.some((b) => b.wohnung === id && b.von <= iso && iso < b.bis);
+  // Welche der gewählten Wohnungen sind im ganzen Zeitraum frei?
+  const zeitraumNaechte = f.anreise && f.abreise ? naechte(f.anreise, f.abreise) : [];
+  const freieWohnungen = gewaehlte.filter((w) => zeitraumNaechte.every((n) => !belegtFuer(w.id)(n)));
+  const kaminholzMoeglich = (zeitraumNaechte.length ? freieWohnungen : gewaehlte).some((w) => w.kaminholz);
+  const preise = f.anreise && f.abreise ? freieWohnungen.map((w) => ({ w, r: berechne(w, f.anreise, f.abreise, { koerbeKaminholz: kaminholzMoeglich && f.kaminholz ? Number(f.koerbe) : 0, babybett: f.babybett }) })) : [];
+  const wohnungText =
+    f.wohnung === 'egal' && zeitraumNaechte.length && freieWohnungen.length
+      ? `Egal, Hauptsache frei (frei: ${freieWohnungen.map((w) => w.name).join(' oder ')})`
+      : auswahl.find((a) => a.wert === f.wohnung)?.text ?? '';
   const extras = [kaminholzMoeglich && f.kaminholz && `Kaminholz (${f.koerbe} ${f.koerbe === '1' ? 'Korb' : 'Körbe'})`, f.babybett && 'Babybett', f.aufbettung && 'Aufbettung'].filter(Boolean).join(', ');
 
   const text = [
@@ -93,6 +97,7 @@ export default function KontaktPage() {
     if (!f.anreise || !f.abreise) return 'Bitte wählen Sie im Kalender An- und Abreisetag.';
     if (f.abreise <= f.anreise) return 'Der Abreisetag muss nach dem Anreisetag liegen.';
     if (naechte(f.anreise, f.abreise).length < MINDESTAUFENTHALT) return `Eine Buchung ist erst ab ${MINDESTAUFENTHALT} Nächten möglich.`;
+    if (freieWohnungen.length === 0) return 'In diesem Zeitraum ist keine passende Wohnung frei. Bitte wählen Sie andere Tage.';
     return '';
   };
 
@@ -144,7 +149,7 @@ export default function KontaktPage() {
               von={f.anreise}
               bis={f.abreise}
               onChange={(anreise, abreise) => setF({ ...f, anreise, abreise })}
-              nachtBelegt={nachtBelegt}
+              wohnungen={gewaehlte.map((w) => ({ name: w.name, belegt: belegtFuer(w.id) }))}
               belegungBekannt={statusFuer(zustand, gewaehlte.map((w) => w.id)) === 'ok'}
             />
             {f.anreise && (
@@ -154,6 +159,16 @@ export default function KontaktPage() {
               </p>
             )}
           </fieldset>
+
+          {f.wohnung === 'egal' && zeitraumNaechte.length > 0 && (
+            <p className={`klein rounded-sm px-3 py-2 ${freieWohnungen.length ? 'bg-wasser/15' : 'bg-[#9b2c1f] text-white font-semibold'}`} role="status">
+              {freieWohnungen.length === 0
+                ? 'In diesem Zeitraum ist keine Wohnung durchgehend frei. Bitte wählen Sie andere Tage.'
+                : freieWohnungen.length === 1
+                  ? `In Ihrem Zeitraum ist nur ${freieWohnungen[0].name} (${freieWohnungen[0].etage}) frei.`
+                  : 'In Ihrem Zeitraum sind beide Wohnungen frei.'}
+            </p>
+          )}
 
           {preise.length > 0 && (
             <div className="bg-papier border border-linie rounded-md p-5" aria-live="polite">

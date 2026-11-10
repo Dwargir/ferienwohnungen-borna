@@ -42,13 +42,20 @@ export default async function handler(req, res) {
     }
     // ?pruefen=1 zeigt eine kurze Zusammenfassung statt der Rohdaten
     if (req.query.pruefen) {
-      const termine = [...data.matchAll(/DTSTART[^:]*:(\d{8})[\s\S]*?DTEND[^:]*:(\d{8})/g)].map((m) => `${m[1]} bis ${m[2]}`);
+      const bloecke = data.split(/BEGIN:VEVENT/i).slice(1).map((b) => b.split(/END:VEVENT/i)[0]);
+      const tag = (b, feld) => {
+        const m = b.match(new RegExp('\\n' + feld + '[^:\\n]*:(\\d{8})', 'i'));
+        return m ? m[1] : null;
+      };
+      const termine = bloecke.map((b) => {
+        const art = (b.match(/\nSUMMARY[^:\n]*:([^\r\n]*)/i) || [])[1] || '';
+        return `${tag(b, 'DTSTART')} bis ${tag(b, 'DTEND') || '(kein Ende)'} ${art}`.trim();
+      });
       return res.status(200).json({
         ok: true,
-        istKalender: data.includes('BEGIN:VCALENDAR'),
         anzahlTermine: termine.length,
-        termine: termine.slice(0, 20),
-        anfang: data.slice(0, 200),
+        termine,
+        rohdaten: data.slice(0, 1500),
       });
     }
     res.setHeader('Content-Type', 'text/calendar; charset=utf-8');
