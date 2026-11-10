@@ -26,7 +26,10 @@ export type Status = 'laedt' | 'ok' | 'fehler';
   von = erste gesperrte Nacht, bis = Tag danach (wie bei einer Abreise).
   Beispiel: 24. bis 26. Dezember gesperrt → { wohnung: 'simply-good', von: '2026-12-24', bis: '2026-12-27' }
 */
-const ZUSAETZLICH_GESPERRT: Belegung[] = [];
+const ZUSAETZLICH_GESPERRT: Belegung[] = [
+  // Simply Good: 24., 25. und 26. Dezember 2026 geschlossen (Nächte 24.–26., nächste Anreise ab 27.)
+  { wohnung: 'simply-good', von: '2026-12-24', bis: '2026-12-27' },
+];
 
 type Zustand = { belegungen: Belegung[]; status: Status; statusJe: Partial<Record<WohnungId, Status>> };
 
