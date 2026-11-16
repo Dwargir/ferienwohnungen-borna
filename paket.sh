@@ -29,6 +29,16 @@ cp public/.htaccess "$TMP/.htaccess"
 cp public/bilder/.htaccess "$TMP/bilder/.htaccess"
 cp public/admin/.htaccess "$TMP/admin/.htaccess"
 
+# Bestehenden Einrichtungscode behalten? (CONFIG=pfad/zur/alten/admin/config.php ./paket.sh …)
+if [ -n "${CONFIG:-}" ] && [ -f "$CONFIG" ]; then
+  cp "$CONFIG" "$TMP/admin/config.php"
+  case "$ZIP" in /*) ZIEL="$ZIP" ;; *) ZIEL="$PWD/$ZIP" ;; esac
+  rm -f "$ZIEL"
+  (cd "$TMP" && zip -qr -X "$ZIEL" . -x '*.DS_Store')
+  echo; echo "Paket erstellt: $ZIP"; echo "Einrichtungscode: unverändert (aus $CONFIG)"
+  exit 0
+fi
+
 # Einrichtungscode erzeugen (ohne leicht verwechselbare Zeichen)
 CODE="$(php -r '$a="ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; $c=""; for($i=0;$i<12;$i++){ $c.=$a[random_int(0,strlen($a)-1)]; if($i==3||$i==7) $c.="-"; } echo $c;')"
 CODE="$CODE" php -r 'file_put_contents($argv[1], "<?php\n// Nur der Hash des Einrichtungscodes – der Code selbst steht nirgends im Paket.\n\$EINRICHTUNG_HASH = " . var_export(password_hash(getenv("CODE"), PASSWORD_DEFAULT), true) . ";\n");' "$TMP/admin/config.php"

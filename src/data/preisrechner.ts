@@ -2,14 +2,12 @@
   Preisberechnung für eine Anfrage.
   Eine Nacht wird nach dem Tag berechnet, an dem sie beginnt:
   - Freitag und Samstag: Wochenendpreis
-  - Weihnachtsnächte (siehe WEIHNACHTSNAECHTE): Weihnachtspreis
+  - Nächte mit Weihnachtspreis (im Admin einstellbar): Weihnachtspreis
   - alle anderen Nächte: Preis Sonntag bis Donnerstag
 */
-import { ENDREINIGUNG, KAMINHOLZ_PRO_KORB, BABYBETT_PRO_AUFENTHALT } from './wohnungen';
+import { ENDREINIGUNG, KAMINHOLZ_PRO_KORB, BABYBETT_PRO_AUFENTHALT, WEIHNACHTSNAECHTE } from './wohnungen';
 import type { Wohnung } from './wohnungen';
 
-// Nächte mit Weihnachtspreis, als Monat-Tag (Nacht vom 24. auf den 25. = '12-24')
-export const WEIHNACHTSNAECHTE = ['12-24', '12-25', '12-26'];
 
 export function isoDatum(d: Date) {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
@@ -32,7 +30,7 @@ export function naechte(von: string, bis: string): string[] {
 }
 
 export function nachtPreis(w: Wohnung, iso: string) {
-  if (WEIHNACHTSNAECHTE.includes(iso.slice(5))) return { stufe: 'weihnachten' as const, preis: w.preise.weihnachten };
+  if (WEIHNACHTSNAECHTE.includes(iso)) return { stufe: 'weihnachten' as const, preis: w.preise.weihnachten };
   const tag = ausIso(iso).getDay(); // 5 = Freitag, 6 = Samstag
   if (tag === 5 || tag === 6) return { stufe: 'wochenende' as const, preis: w.preise.wochenende };
   return { stufe: 'werktags' as const, preis: w.preise.werktags };

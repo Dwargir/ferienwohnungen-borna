@@ -327,7 +327,12 @@
     "mindestaufenthalt": 2,
     "kaminholz_pro_korb": 10,
     "babybett": 10,
-    "direkt_vorteil": "Profitieren Sie von unseren Preisen für Direktbuchungen."
+    "direkt_vorteil": "Profitieren Sie von unseren Preisen für Direktbuchungen.",
+    "weihnachts_naechte": [
+      "2026-12-24",
+      "2026-12-25",
+      "2026-12-26"
+    ]
   },
   "kontakt": {
     "name": "Uta Finke",

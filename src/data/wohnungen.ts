@@ -42,6 +42,8 @@ export let ENDREINIGUNG = 25;
 export let MINDESTAUFENTHALT = 2;
 export let KAMINHOLZ_PRO_KORB = 10;   // Euro pro Korb
 export let BABYBETT_PRO_AUFENTHALT = 10; // Euro für den ganzen Aufenthalt
+// Nächte mit Weihnachtspreis (JJJJ-MM-TT) – im Admin unter „Preise & Kontakt“ einstellbar
+export let WEIHNACHTSNAECHTE: string[] = ['2026-12-24', '2026-12-25', '2026-12-26'];
 
 export const KONTAKT = {
   name: 'Uta Finke',
@@ -203,6 +205,39 @@ export const PREISSTUFEN = [
   { key: 'weihnachten', name: 'Weihnachten' },
 ] as const;
 
+// Nächte mit Weihnachtspreis lesbar, z. B. „24.–26.12.2026“ (nur kommende)
+export function weihnachtsZeitraum() {
+  const heute = new Date().toISOString().slice(0, 10);
+  const tage = WEIHNACHTSNAECHTE.filter((d) => d >= heute).sort();
+  if (!tage.length) return '';
+  const teile: string[][] = [];
+  for (const d of tage) {
+    const letzte = teile[teile.length - 1];
+    const vorher = letzte?.[letzte.length - 1];
+    const naechster = vorher ? new Date(Date.UTC(+vorher.slice(0, 4), +vorher.slice(5, 7) - 1, +vorher.slice(8) + 1)).toISOString().slice(0, 10) : '';
+    if (letzte && naechster === d) letzte.push(d);
+    else teile.push([d]);
+  }
+  const tag = (d: string) => +d.slice(8);
+  const monat = (d: string) => +d.slice(5, 7);
+  return teile
+    .map((t) => {
+      const a = t[0];
+      const z = t[t.length - 1];
+      if (t.length === 1) return `${tag(a)}.${monat(a)}.${a.slice(0, 4)}`;
+      const anfang = monat(a) === monat(z) ? `${tag(a)}.` : `${tag(a)}.${monat(a)}.`;
+      return `${anfang}–${tag(z)}.${monat(z)}.${z.slice(0, 4)}`;
+    })
+    .join(', ');
+}
+
+export function preisstufeName(key: 'werktags' | 'wochenende' | 'weihnachten') {
+  const name = PREISSTUFEN.find((p) => p.key === key)!.name;
+  if (key !== 'weihnachten') return name;
+  const zeitraum = weihnachtsZeitraum();
+  return zeitraum ? `${name} (${zeitraum})` : name;
+}
+
 export let DIREKT_VORTEIL = 'Profitieren Sie von unseren Preisen für Direktbuchungen.';
 export const DIREKT_HINWEIS = 'Diese Preise gelten, wenn Sie direkt bei uns anfragen und buchen – per Telefon, WhatsApp oder E-Mail.';
 
@@ -245,6 +280,7 @@ export function uebernehmeInhalt(i: any) {
   MINDESTAUFENTHALT = Math.max(1, Math.round(zahl(a.mindestaufenthalt, MINDESTAUFENTHALT)));
   KAMINHOLZ_PRO_KORB = zahl(a.kaminholz_pro_korb, KAMINHOLZ_PRO_KORB);
   BABYBETT_PRO_AUFENTHALT = zahl(a.babybett, BABYBETT_PRO_AUFENTHALT);
+  WEIHNACHTSNAECHTE = datumListe(a.weihnachts_naechte, WEIHNACHTSNAECHTE);
   DIREKT_VORTEIL = txt(a.direkt_vorteil, DIREKT_VORTEIL);
 
   const st = i.startseite ?? {};

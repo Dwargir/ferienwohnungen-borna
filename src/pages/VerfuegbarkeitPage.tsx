@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import Kalender from '../components/Kalender';
 import KontaktWege from '../components/KontaktWege';
 import { useBelegung, statusFuer } from '../data/belegung';
-import { wohnungen, euro, ENDREINIGUNG, MINDESTAUFENTHALT, PREISSTUFEN, DIREKT_VORTEIL, DIREKT_HINWEIS } from '../data/wohnungen';
+import { wohnungen, euro, ENDREINIGUNG, MINDESTAUFENTHALT, PREISSTUFEN, preisstufeName, DIREKT_VORTEIL, DIREKT_HINWEIS } from '../data/wohnungen';
 
 export default function VerfuegbarkeitPage() {
   const zustand = useBelegung();
@@ -51,7 +51,7 @@ export default function VerfuegbarkeitPage() {
           <tbody>
             {PREISSTUFEN.map((p) => (
               <tr key={p.key} className="border-b border-linie">
-                <th scope="row" className="py-3 pr-6 font-normal">{p.name}</th>
+                <th scope="row" className="py-3 pr-6 font-normal">{preisstufeName(p.key)}</th>
                 {wohnungen.map((w) => (
                   <td key={w.id} className="py-3 pr-6 tabular-nums font-semibold">{euro(w.preise[p.key])}</td>
                 ))}

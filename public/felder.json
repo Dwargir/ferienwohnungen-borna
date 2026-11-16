@@ -317,6 +317,11 @@
               "max": 200
             },
             {
+              "id": "weihnachts_naechte",
+              "typ": "kalender",
+              "label": "Nächte mit Weihnachtspreis (auch Silvester oder andere Feiertage möglich)"
+            },
+            {
               "id": "direkt_vorteil",
               "typ": "text",
               "label": "Hinweis Direktbuchung",
