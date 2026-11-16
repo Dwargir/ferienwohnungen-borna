@@ -4,6 +4,7 @@
   Es gibt keine erfundenen Beispielbuchungen mehr.
 */
 import { useSyncExternalStore } from 'react';
+import { wohnungen } from './wohnungen';
 import type { WohnungId } from './wohnungen';
 
 export interface Belegung {
@@ -21,19 +22,21 @@ const KALENDER: { wohnung: WohnungId; url: string }[] = [
 ];
 
 export type Status = 'laedt' | 'ok' | 'fehler';
-/*
-  Zusätzlich gesperrte Tage, falls Booking.com sie (noch) nicht mitschickt.
-  von = erste gesperrte Nacht, bis = Tag danach (wie bei einer Abreise).
-  Beispiel: 24. bis 26. Dezember gesperrt → { wohnung: 'simply-good', von: '2026-12-24', bis: '2026-12-27' }
-*/
-const ZUSAETZLICH_GESPERRT: Belegung[] = [
-  // Simply Good: 24., 25. und 26. Dezember 2026 geschlossen (Nächte 24.–26., nächste Anreise ab 27.)
-  { wohnung: 'simply-good', von: '2026-12-24', bis: '2026-12-27' },
-];
+// Zusätzlich gesperrte Nächte aus dem Admin (Feld „Gesperrte Tage“ je Wohnung)
+function gesperrteNaechte(): Belegung[] {
+  return wohnungen.flatMap((w) =>
+    w.gesperrt.map((tag) => {
+      const [j, m, t] = tag.split('-').map(Number);
+      const morgen = new Date(Date.UTC(j, m - 1, t + 1)).toISOString().slice(0, 10);
+      return { wohnung: w.id, von: tag, bis: morgen };
+    }),
+  );
+}
 
 type Zustand = { belegungen: Belegung[]; status: Status; statusJe: Partial<Record<WohnungId, Status>> };
 
 let zustand: Zustand = { belegungen: [], status: 'laedt', statusJe: {} };
+
 const zuhoerer = new Set<() => void>();
 
 function setze(neu: Zustand) {
@@ -108,7 +111,7 @@ async function lade() {
       return leseICal(await antwort.text(), k.wohnung);
     }),
   );
-  const belegungen = [...ergebnisse.flatMap((e) => (e.status === 'fulfilled' ? e.value : [])), ...ZUSAETZLICH_GESPERRT];
+  const belegungen = [...ergebnisse.flatMap((e) => (e.status === 'fulfilled' ? e.value : [])), ...gesperrteNaechte()];
   const statusJe: Partial<Record<WohnungId, Status>> = {};
   ergebnisse.forEach((e, i) => (statusJe[KALENDER[i].wohnung] = e.status === 'fulfilled' ? 'ok' : 'fehler'));
   const fehler = ergebnisse.some((e) => e.status === 'rejected');

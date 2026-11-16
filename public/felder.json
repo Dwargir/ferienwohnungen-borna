@@ -1,0 +1,77 @@
+{
+  "seitenname": "Ferienwohnungen Borna",
+  "gruppen": [
+    {
+      "titel": "Wohnungen",
+      "felder": [
+        {
+          "id": "wohnungen",
+          "typ": "objekte",
+          "label": "Wohnungen",
+          "einzahl": "Wohnung",
+          "titel_feld": "name",
+          "fest": true,
+          "max": 2,
+          "felder": [
+            { "id": "name", "typ": "text", "label": "Name", "max": 60 },
+            { "id": "etage", "typ": "text", "label": "Etage", "max": 40 },
+            { "id": "kurz", "typ": "text", "label": "Kurzbeschreibung (eine Zeile)", "max": 120 },
+            { "id": "preis_werktags", "typ": "zahl", "label": "Preis pro Nacht, Sonntag bis Donnerstag (€)", "min": 0, "max": 1000, "schritt": 0.01 },
+            { "id": "preis_wochenende", "typ": "zahl", "label": "Preis pro Nacht, Freitag und Samstag (€)", "min": 0, "max": 1000, "schritt": 0.01 },
+            { "id": "preis_weihnachten", "typ": "zahl", "label": "Preis pro Nacht, Weihnachten (€)", "min": 0, "max": 1000, "schritt": 0.01 },
+            { "id": "angebot", "typ": "text", "label": "Angebot (leer lassen, wenn keins)", "max": 160 },
+            { "id": "gratis_nacht_ab", "typ": "zahl", "label": "Eine Nacht gratis ab so vielen Nächten (0 = aus)", "min": 0, "max": 60 },
+            { "id": "personen", "typ": "zahl", "label": "Höchstens Personen", "min": 1, "max": 12 },
+            { "id": "groesse", "typ": "text", "label": "Größe (z. B. 50 m²)", "max": 20 },
+            { "id": "schlafzimmer", "typ": "zahl", "label": "Schlafzimmer", "min": 0, "max": 10 },
+            { "id": "beschreibung", "typ": "textarea", "label": "Beschreibung (Absätze durch eine Leerzeile trennen)", "max": 3000 },
+            { "id": "fotos", "typ": "fotos", "label": "Fotos (das erste ist das große Bild)", "max": 30 },
+            { "id": "gesperrt", "typ": "kalender", "label": "Zusätzlich gesperrte Nächte (z. B. Weihnachten, wenn Booking.com sie nicht mitschickt)" },
+            { "id": "raeume", "typ": "liste", "label": "Räume", "spalten": [{ "id": "name", "label": "Raum" }, { "id": "text", "label": "Beschreibung" }], "max": 20 },
+            { "id": "ausstattung", "typ": "liste", "label": "Ausstattung", "spalten": [{ "id": "text", "label": "Eintrag" }], "max": 50 },
+            { "id": "betten", "typ": "liste", "label": "Betten", "spalten": [{ "id": "text", "label": "Eintrag" }], "max": 10 },
+            { "id": "hinweise", "typ": "liste", "label": "Gut zu wissen", "spalten": [{ "id": "text", "label": "Eintrag" }], "max": 20 },
+            { "id": "bewertung_note", "typ": "zahl", "label": "Booking.com-Note (z. B. 8,9)", "min": 0, "max": 10, "schritt": 0.1 },
+            { "id": "bewertung_anzahl", "typ": "zahl", "label": "Anzahl Bewertungen auf Booking.com", "min": 0, "max": 100000 },
+            { "id": "bewertung_link", "typ": "text", "label": "Link zur Booking.com-Seite", "max": 300 }
+          ]
+        }
+      ]
+    },
+    {
+      "titel": "Startseite",
+      "felder": [
+        { "id": "startseite", "typ": "gruppe", "label": "Startseite", "felder": [
+          { "id": "titel", "typ": "text", "label": "Große Überschrift", "max": 80 },
+          { "id": "einleitung", "typ": "textarea", "label": "Text unter der Überschrift", "max": 400 },
+          { "id": "titelbild", "typ": "fotos", "label": "Großes Foto oben", "max": 1 },
+          { "id": "wohnungen_ueberschrift", "typ": "text", "label": "Überschrift über den Wohnungen", "max": 120 },
+          { "id": "lage_ueberschrift", "typ": "text", "label": "Überschrift Lage", "max": 120 },
+          { "id": "lage_text", "typ": "textarea", "label": "Text Lage", "max": 600 },
+          { "id": "lage_bilder", "typ": "fotos", "label": "Fotos Lage (3 Stück)", "max": 3 },
+          { "id": "lage_punkte", "typ": "liste", "label": "Lage in Stichpunkten", "spalten": [{ "id": "wert", "label": "Kurz (z. B. 5 Min.)" }, { "id": "text", "label": "Text" }], "max": 6 }
+        ] },
+        { "id": "highlights", "typ": "liste", "label": "Stärken unter dem Foto (Booking.com)", "spalten": [{ "id": "wert", "label": "Wert (z. B. 9,3)" }, { "id": "titel", "label": "Titel" }, { "id": "text", "label": "Text" }], "max": 6 }
+      ]
+    },
+    {
+      "titel": "Preise & Kontakt",
+      "felder": [
+        { "id": "allgemein", "typ": "gruppe", "label": "Für beide Wohnungen", "felder": [
+          { "id": "endreinigung", "typ": "zahl", "label": "Endreinigung (€, einmalig)", "min": 0, "max": 500, "schritt": 0.01 },
+          { "id": "mindestaufenthalt", "typ": "zahl", "label": "Mindestaufenthalt (Nächte)", "min": 1, "max": 30 },
+          { "id": "kaminholz_pro_korb", "typ": "zahl", "label": "Kaminholz pro Korb (€, nur Simply Good)", "min": 0, "max": 200 },
+          { "id": "babybett", "typ": "zahl", "label": "Babybett für den ganzen Aufenthalt (€)", "min": 0, "max": 200 },
+          { "id": "direkt_vorteil", "typ": "text", "label": "Hinweis Direktbuchung", "max": 160 }
+        ] },
+        { "id": "kontakt", "typ": "gruppe", "label": "Kontakt", "felder": [
+          { "id": "name", "typ": "text", "label": "Name", "max": 80 },
+          { "id": "strasse", "typ": "text", "label": "Straße und Hausnummer", "max": 80 },
+          { "id": "ort", "typ": "text", "label": "PLZ und Ort", "max": 80 },
+          { "id": "telefon", "typ": "text", "label": "Telefon (auch WhatsApp)", "max": 40 },
+          { "id": "email", "typ": "text", "label": "E-Mail", "max": 120 }
+        ] }
+      ]
+    }
+  ]
+}

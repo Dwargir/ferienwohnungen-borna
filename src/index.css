@@ -111,3 +111,13 @@
     border-color: var(--color-see);
   }
 }
+
+/* Grundinhalt aus dem HTML (für Google und ohne JavaScript), wird beim Laden ersetzt */
+.grundinhalt {
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem;
+}
+.grundinhalt h1 { font-size: 2rem; margin: 1rem 0; }
+.grundinhalt h2 { font-size: 1.4rem; margin: 1.5rem 0 0.5rem; }
+.grundinhalt nav a, .grundinhalt a { color: var(--color-wasser); }

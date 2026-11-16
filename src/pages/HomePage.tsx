@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import KontaktWege from '../components/KontaktWege';
 import Bewertung from '../components/Bewertung';
-import { wohnungen, euro, highlights, DIREKT_VORTEIL } from '../data/wohnungen';
+import { wohnungen, euro, highlights, DIREKT_VORTEIL, startseite } from '../data/wohnungen';
 import { fotosFuer } from '../data/fotos';
 
 /*
@@ -12,12 +12,6 @@ import { fotosFuer } from '../data/fotos';
   4. Kontakt
 */
 
-const lage = [
-  { wert: '5 Min.', text: 'zu Fuß zu Bäcker, Supermarkt und Café' },
-  { wert: '30 Min.', text: 'mit Auto oder S-Bahn nach Leipzig' },
-  { wert: 'Seen', text: 'zum Baden und Radfahren gleich in der Nähe' },
-];
-
 export default function HomePage() {
   return (
     <>
@@ -25,11 +19,9 @@ export default function HomePage() {
       <section className="max-w-6xl mx-auto px-5 sm:px-8 pt-8 sm:pt-14 grid gap-8 md:gap-14 md:grid-cols-[1fr_1.1fr] md:items-center">
         <div className="order-2 md:order-1">
           <h1 className="text-[2.5rem] leading-[1.08] sm:text-[3.6rem]">
-            Ferien&shy;wohnungen in Borna
+            {startseite.titel.replace('Ferienwohnungen', 'Ferien\u00adwohnungen')}
           </h1>
-          <p className="mt-5 text-xl max-w-md">
-            Zwei gemütliche Wohnungen in einer Stadtvilla mit Garten – mitten im Leipziger Neuseenland.
-          </p>
+          <p className="mt-5 text-xl max-w-md">{startseite.einleitung}</p>
           <div className="mt-8 flex flex-wrap gap-3">
             <a href="#wohnungen" className="knopf">Wohnungen ansehen</a>
             <Link to="/verfuegbarkeit" className="knopf knopf-hell">Freie Termine</Link>
@@ -37,8 +29,8 @@ export default function HomePage() {
         </div>
         <div className="order-1 md:order-2">
           <img
-            src="/images/haus/garten.jpg"
-            alt="Das Haus mit blühenden Hortensien im Garten"
+            src={startseite.titelbild.src}
+            alt={startseite.titelbild.titel || startseite.titel}
             className="w-full aspect-[4/3] md:aspect-[5/4] object-cover object-[50%_70%] rounded-md"
           />
         </div>
@@ -60,7 +52,7 @@ export default function HomePage() {
 
       {/* 2. Die Wohnungen */}
       <section id="wohnungen" className="max-w-6xl mx-auto px-5 sm:px-8 pt-16 sm:pt-20 scroll-mt-20">
-        <h2 className="text-3xl sm:text-4xl">Unsere beiden Wohnungen für Ihre perfekte Auszeit</h2>
+        <h2 className="text-3xl sm:text-4xl">{startseite.wohnungenUeberschrift}</h2>
         <p className="mt-3 font-semibold text-wasser">{DIREKT_VORTEIL}</p>
         <div className="mt-8 grid gap-10 md:grid-cols-2">
           {wohnungen.map((w) => {
@@ -100,17 +92,21 @@ export default function HomePage() {
       <section className="mt-20 sm:mt-28 bg-papier border-y border-linie">
         <div className="max-w-6xl mx-auto px-5 sm:px-8 py-14 sm:py-16 grid gap-10 md:grid-cols-[1.1fr_1fr] md:items-center">
           <div className="grid grid-cols-3 grid-rows-2 gap-3 h-80 sm:h-[440px]">
-            <img src="/images/haus/eingang.jpg" alt="Eingang mit Sitzbank" loading="lazy" className="col-span-2 row-span-2 w-full h-full object-cover rounded-md" />
-            <img src="/images/haus/aussicht.jpg" alt="Blick über die Nachbarschaft" loading="lazy" className="w-full h-full object-cover rounded-md" />
-            <img src="/images/haus/luftbild.jpg" alt="Luftbild mit den Seen am Horizont" loading="lazy" className="w-full h-full object-cover rounded-md" />
+            {startseite.lageBilder.slice(0, 3).map((b, i) => (
+              <img
+                key={b.src}
+                src={b.src}
+                alt={b.titel}
+                loading="lazy"
+                className={`w-full h-full object-cover rounded-md ${i === 0 ? 'col-span-2 row-span-2' : ''} ${startseite.lageBilder.length === 1 ? 'col-span-3' : ''}`}
+              />
+            ))}
           </div>
           <div>
-            <h2 className="text-3xl sm:text-4xl">Ruhig wohnen, schnell überall</h2>
-            <p className="mt-4 max-w-md">
-              Das Haus liegt in einer ruhigen Straße am Stadtrand von Borna. Geparkt wird direkt vor der Tür.
-            </p>
+            <h2 className="text-3xl sm:text-4xl">{startseite.lageUeberschrift}</h2>
+            <p className="mt-4 max-w-md">{startseite.lageText}</p>
             <dl className="mt-8 space-y-5">
-              {lage.map((l) => (
+              {startseite.lagePunkte.map((l) => (
                 <div key={l.wert} className="flex items-baseline gap-5">
                   <dt className="w-24 shrink-0 text-2xl font-semibold">{l.wert}</dt>
                   <dd>{l.text}</dd>

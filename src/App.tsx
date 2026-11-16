@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate, Link, useLocation } from 'react
 import { useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import Seo from './components/Seo';
 import HomePage from './pages/HomePage';
 import WohnungPage from './pages/WohnungPage';
 import VerfuegbarkeitPage from './pages/VerfuegbarkeitPage';
@@ -53,6 +54,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <NachObenScrollen />
+      <Seo />
       <Seiten />
     </BrowserRouter>
   );
