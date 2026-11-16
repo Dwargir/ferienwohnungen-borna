@@ -1,0 +1,32 @@
+# Baut die Website für IONOS (ohne Vercel).
+# Ergebnis: Download "website-dist" unter Actions -> Lauf -> Artifacts.
+# Daraus macht ./paket.sh <ordner> das Kundenpaket mit Einrichtungscode (lokal, damit der Code nie im Log steht).
+name: Website für IONOS bauen
+
+on:
+  push:
+    branches: [main, ueberarbeitung]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  bauen:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: Admin-Daten leeren (keine Passwörter im Download)
+        run: rm -rf dist/admin/daten/pw.php dist/admin/config.php
+      - uses: actions/upload-artifact@v4
+        with:
+          name: website-dist
+          path: dist
+          include-hidden-files: true
+          retention-days: 30

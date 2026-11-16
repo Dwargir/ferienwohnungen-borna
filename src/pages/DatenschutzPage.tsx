@@ -18,16 +18,17 @@ export default function DatenschutzPage() {
         <p>
           Diese Website setzt keine Cookies, verwendet keine Analyse- oder Werbedienste und lädt keine Schriften oder
           Inhalte von fremden Servern. Personenbezogene Daten erhalten wir nur, wenn Sie uns selbst schreiben oder anrufen.
+          Nur im passwortgeschützten Verwaltungsbereich der Gastgeberin wird ein technisch notwendiges Sitzungs-Cookie gesetzt.
         </p>
       </section>
 
       <section>
         <h2>Hosting und Server-Logdateien</h2>
         <p>
-          Die Website wird bei Vercel Inc. (USA) gehostet. Beim Aufruf
+          Die Website wird bei der IONOS SE, Elgendorfer Straße 57, 56410 Montabaur, gehostet. Beim Aufruf
           der Seiten werden technisch notwendige Daten verarbeitet: IP-Adresse, Datum und Uhrzeit, aufgerufene Seite,
           Browsertyp und Betriebssystem. Das ist nötig, um die Website sicher auszuliefern (Art. 6 Abs. 1 lit. f DSGVO).
-          Vercel ist nach dem EU-US Data Privacy Framework zertifiziert.
+          Mit IONOS besteht ein Vertrag zur Auftragsverarbeitung.
         </p>
       </section>
 
