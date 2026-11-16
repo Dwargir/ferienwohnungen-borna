@@ -35,6 +35,7 @@ export interface Wohnung {
   bewertung: { note: number; anzahl: number; link: string };
   fotos: Foto[];
   gesperrt: string[]; // zusätzlich gesperrte Nächte (JJJJ-MM-TT), im Admin pflegbar
+  bookingIcal: string; // Export-Link aus dem Booking.com-Extranet
 }
 
 export let ENDREINIGUNG = 25;
@@ -98,6 +99,7 @@ export const wohnungen: Wohnung[] = [
       bild('good-06-terrasse.jpg', 'Terrasse'),
     ],
     gesperrt: ['2026-12-24', '2026-12-25', '2026-12-26'],
+    bookingIcal: 'https://ical.booking.com/v1/export?t=2722b773-cfd4-44ce-8308-6ab7a3b139a6',
   },
   {
     id: 'simply-nice',
@@ -141,6 +143,7 @@ export const wohnungen: Wohnung[] = [
       bild('nice-05-fernseher-und-sideboard.jpg', 'Fernseher und Sideboard'),
     ],
     gesperrt: [],
+    bookingIcal: 'https://ical.booking.com/v1/export?t=f2d8ec97-c71e-469e-a06b-f6382d4bc212',
   },
 ];
 
@@ -291,6 +294,7 @@ export function uebernehmeInhalt(i: any) {
       };
       w.fotos = fotoListe(d.fotos, w.fotos);
       w.gesperrt = datumListe(d.gesperrt, w.gesperrt);
+      if (typeof d.booking_ical === 'string' && /^https:\/\/(ical|admin)\.booking\.com\//.test(d.booking_ical.trim())) w.bookingIcal = d.booking_ical.trim();
     }
   }
 }

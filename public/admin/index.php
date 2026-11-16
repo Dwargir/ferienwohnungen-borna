@@ -683,13 +683,28 @@ $e = fn($s) => htmlspecialchars((string) $s, ENT_QUOTES, 'UTF-8');
               $('strong', { text: `${MON[m]} ${j}` }),
               $('button', { type: 'button', class: 'hell klein', text: '›', 'aria-label': 'Nächster Monat', onclick: () => { m++; if (m > 11) { m = 0; j++; } zeichnen(); } })),
             raster,
-            $('p', { class: 'hinweis', text: liste.length ? `Gesperrt (ab heute): ${liste.map((d) => d.split('-').reverse().join('.')).join(', ')}` : 'Keine Nächte gesperrt. Tippen Sie auf einen Tag, um die Nacht zu sperren.' }));
+            $('p', { class: 'hinweis', text: liste.length ? `Gesperrt (ab heute): ${liste.map((d) => d.split('-').reverse().join('.')).join(', ')}` : 'Keine Nächte gesperrt. Tippen Sie auf einen Tag, um die Nacht zu sperren.' }),
+            f.export_link && ziel._id ? exportLink(ziel._id) : null);
         };
         zeichnen();
         return box;
       }
     }
     return $('div');
+  }
+
+  // Link, den Booking.com unter „Kalender importieren“ bekommt
+  function exportLink(id) {
+    const adresse = new URL(`../api/kalender.php?wohnung=${encodeURIComponent(id)}`, location.href).href;
+    const feldLink = $('input', { type: 'text', readonly: true, 'aria-label': 'Link für Booking.com' });
+    feldLink.value = adresse;
+    const knopf = $('button', { type: 'button', class: 'hell klein', text: 'Link kopieren', onclick: async () => {
+      try { await navigator.clipboard.writeText(adresse); knopf.textContent = 'Kopiert'; } catch { feldLink.select(); }
+    } });
+    return $('div', { class: 'gruppe' },
+      $('label', { text: 'Link für Booking.com (im Extranet unter „Kalender importieren“ eintragen)' }),
+      $('div', { class: 'zeile' }, feldLink, knopf),
+      $('p', { class: 'hinweis', text: 'Booking.com liest diesen Kalender selbstständig alle paar Stunden. Gesperrte Nächte erst speichern, dann übernimmt Booking sie beim nächsten Abgleich.' }));
   }
 
   document.getElementById('speichern').addEventListener('click', async () => {

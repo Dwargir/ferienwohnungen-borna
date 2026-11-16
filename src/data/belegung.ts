@@ -13,13 +13,8 @@ export interface Belegung {
   bis: string; // Abreisetag, JJJJ-MM-TT (an diesem Tag ist eine neue Anreise möglich)
 }
 
-// Export-Links aus dem Booking.com-Extranet:
-// Preise & Verfügbarkeit → Kalender synchronisieren → Kalender exportieren
-// Stand: 8. November 2026 (neu erzeugt)
-const KALENDER: { wohnung: WohnungId; url: string }[] = [
-  { wohnung: 'simply-good', url: 'https://ical.booking.com/v1/export?t=2722b773-cfd4-44ce-8308-6ab7a3b139a6' },
-  { wohnung: 'simply-nice', url: 'https://ical.booking.com/v1/export?t=f2d8ec97-c71e-469e-a06b-f6382d4bc212' },
-];
+// Export-Links aus dem Booking.com-Extranet – werden im Admin je Wohnung gepflegt
+const kalender = () => wohnungen.filter((w) => w.bookingIcal).map((w) => ({ wohnung: w.id, url: w.bookingIcal }));
 
 export type Status = 'laedt' | 'ok' | 'fehler';
 // Zusätzlich gesperrte Nächte aus dem Admin (Feld „Gesperrte Tage“ je Wohnung)
@@ -105,7 +100,7 @@ export function leseICal(text: string, wohnung: WohnungId): Belegung[] {
 
 async function lade() {
   const ergebnisse = await Promise.allSettled(
-    KALENDER.map(async (k) => {
+    kalender().map(async (k) => {
       const antwort = await fetch(`/api/ical-proxy?url=${encodeURIComponent(k.url)}`);
       if (!antwort.ok) throw new Error(`HTTP ${antwort.status}`);
       return leseICal(await antwort.text(), k.wohnung);
@@ -113,7 +108,7 @@ async function lade() {
   );
   const belegungen = [...ergebnisse.flatMap((e) => (e.status === 'fulfilled' ? e.value : [])), ...gesperrteNaechte()];
   const statusJe: Partial<Record<WohnungId, Status>> = {};
-  ergebnisse.forEach((e, i) => (statusJe[KALENDER[i].wohnung] = e.status === 'fulfilled' ? 'ok' : 'fehler'));
+  ergebnisse.forEach((e, i) => (statusJe[kalender()[i].wohnung] = e.status === 'fulfilled' ? 'ok' : 'fehler'));
   const fehler = ergebnisse.some((e) => e.status === 'rejected');
   setze({ belegungen, status: fehler ? 'fehler' : 'ok', statusJe });
 }

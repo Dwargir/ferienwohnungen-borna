@@ -198,7 +198,8 @@
       ],
       "bewertung_note": 8.9,
       "bewertung_anzahl": 61,
-      "bewertung_link": "https://www.booking.com/hotel/de/simply-good-appartment.de.html"
+      "bewertung_link": "https://www.booking.com/hotel/de/simply-good-appartment.de.html",
+      "booking_ical": "https://ical.booking.com/v1/export?t=2722b773-cfd4-44ce-8308-6ab7a3b139a6"
     },
     {
       "_id": "simply-nice",
@@ -317,7 +318,8 @@
       "gesperrt": [],
       "bewertung_note": 8.7,
       "bewertung_anzahl": 29,
-      "bewertung_link": "https://www.booking.com/hotel/de/simply-nice-appartment.de.html"
+      "bewertung_link": "https://www.booking.com/hotel/de/simply-nice-appartment.de.html",
+      "booking_ical": "https://ical.booking.com/v1/export?t=f2d8ec97-c71e-469e-a06b-f6382d4bc212"
     }
   ],
   "allgemein": {
