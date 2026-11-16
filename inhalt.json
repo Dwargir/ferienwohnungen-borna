@@ -1,0 +1,344 @@
+{
+  "startseite": {
+    "titel": "Ferienwohnungen in Borna",
+    "einleitung": "Zwei gemütliche Wohnungen in einer Stadtvilla mit Garten – mitten im Leipziger Neuseenland.",
+    "titelbild": [
+      {
+        "datei": "haus-garten.jpg",
+        "text": "Das Haus mit blühenden Hortensien im Garten"
+      }
+    ],
+    "wohnungen_ueberschrift": "Unsere beiden Wohnungen für Ihre perfekte Auszeit",
+    "lage_ueberschrift": "Ruhig wohnen, schnell überall",
+    "lage_text": "Das Haus liegt in einer ruhigen Straße am Stadtrand von Borna. Geparkt wird direkt vor der Tür.",
+    "lage_bilder": [
+      {
+        "datei": "haus-eingang.jpg",
+        "text": "Eingang mit Sitzbank"
+      },
+      {
+        "datei": "haus-aussicht.jpg",
+        "text": "Blick über die Nachbarschaft"
+      },
+      {
+        "datei": "haus-luftbild.jpg",
+        "text": "Luftbild mit den Seen am Horizont"
+      }
+    ],
+    "lage_punkte": [
+      {
+        "wert": "5 Min.",
+        "text": "zu Fuß zu Bäcker, Supermarkt und Café"
+      },
+      {
+        "wert": "30 Min.",
+        "text": "mit Auto oder S-Bahn nach Leipzig"
+      },
+      {
+        "wert": "Seen",
+        "text": "zum Baden und Radfahren gleich in der Nähe"
+      }
+    ]
+  },
+  "highlights": [
+    {
+      "wert": "9,3",
+      "titel": "Lage",
+      "text": "So bewerten Gäste die ruhige Lage am Stadtrand."
+    },
+    {
+      "wert": "9,4",
+      "titel": "Gastgeberin",
+      "text": "Gäste loben die herzliche Betreuung."
+    },
+    {
+      "wert": "WLAN",
+      "titel": "Ideal zum Arbeiten",
+      "text": "Kostenloses WLAN und ein ruhiger Platz – gut für Geschäftsreisen."
+    },
+    {
+      "wert": "Level 2",
+      "titel": "Nachhaltiger reisen",
+      "text": "Ausgezeichnet im Programm von Booking.com."
+    }
+  ],
+  "wohnungen": [
+    {
+      "_id": "simply-good",
+      "name": "Simply Good",
+      "etage": "Erdgeschoss",
+      "kurz": "Mit Kamin und eigener Terrasse",
+      "preis_werktags": 95,
+      "preis_wochenende": 112,
+      "preis_weihnachten": 117,
+      "angebot": "Ab 7 Nächten ist eine Nacht gratis.",
+      "gratis_nacht_ab": 7,
+      "personen": 3,
+      "groesse": "50 m²",
+      "schlafzimmer": 1,
+      "beschreibung": "Die Wohnung liegt ruhig im Erdgeschoss einer Stadtvilla am Stadtrand von Borna. Auf 50 m² ist Platz für bis zu drei Personen.\n\nÜber einen Schlüsselsafe können Sie jederzeit selbst einchecken. Fahrräder stehen sicher und kostenlos in der Garage, Leihräder sind vorhanden.",
+      "raeume": [
+        {
+          "name": "Wohnzimmer",
+          "text": "Gemütlicher Wohnbereich mit Kamin"
+        },
+        {
+          "name": "Küche",
+          "text": "Herd, Mikrowelle, Toaster, Wasserkocher, Kaffee- und Espressomaschine, Geschirr"
+        },
+        {
+          "name": "Schlafzimmer",
+          "text": "Boxspringbett 180 × 200 cm"
+        },
+        {
+          "name": "Bad",
+          "text": "Dusche, Duschgel, Föhn"
+        },
+        {
+          "name": "Terrasse",
+          "text": "Mit Sitzgruppe, Rauchen erlaubt"
+        }
+      ],
+      "betten": [
+        {
+          "text": "Boxspringbett 180 × 200 cm"
+        },
+        {
+          "text": "Sofa als Aufbettung (auf Anfrage)"
+        },
+        {
+          "text": "Babybett für 10 € pro Aufenthalt"
+        }
+      ],
+      "ausstattung": [
+        {
+          "text": "WLAN"
+        },
+        {
+          "text": "Smart-TV"
+        },
+        {
+          "text": "Kamin"
+        },
+        {
+          "text": "Kaffeemaschine"
+        },
+        {
+          "text": "Espressomaschine"
+        },
+        {
+          "text": "Bettwäsche und Handtücher"
+        },
+        {
+          "text": "Föhn"
+        },
+        {
+          "text": "Bügeleisen"
+        },
+        {
+          "text": "Hygieneartikel"
+        },
+        {
+          "text": "Parkplatz vor dem Haus"
+        },
+        {
+          "text": "Leihräder"
+        },
+        {
+          "text": "Fahrradgarage"
+        },
+        {
+          "text": "Garten"
+        },
+        {
+          "text": "Grillplatz"
+        }
+      ],
+      "hinweise": [
+        {
+          "text": "Rauchen bitte nur auf der Terrasse"
+        },
+        {
+          "text": "Kostenloser Parkplatz direkt vor der Wohnung"
+        },
+        {
+          "text": "Kaminholz für 10 € pro Korb"
+        }
+      ],
+      "fotos": [
+        {
+          "datei": "good-01-wohnzimmer.jpg",
+          "text": "Wohnzimmer"
+        },
+        {
+          "datei": "good-02-wohnzimmer-mit-kamin.jpg",
+          "text": "Wohnzimmer mit Kamin"
+        },
+        {
+          "datei": "good-03-schlafzimmer.jpg",
+          "text": "Schlafzimmer"
+        },
+        {
+          "datei": "good-04-kueche-mit-tuer-zur-terrasse.jpg",
+          "text": "Küche mit Tür zur Terrasse"
+        },
+        {
+          "datei": "good-05-bad.jpg",
+          "text": "Bad"
+        },
+        {
+          "datei": "good-06-terrasse.jpg",
+          "text": "Terrasse"
+        }
+      ],
+      "gesperrt": [
+        "2026-12-24",
+        "2026-12-25",
+        "2026-12-26"
+      ],
+      "bewertung_note": 8.9,
+      "bewertung_anzahl": 61,
+      "bewertung_link": "https://www.booking.com/hotel/de/simply-good-appartment.de.html",
+      "booking_ical": "https://ical.booking.com/v1/export?t=2722b773-cfd4-44ce-8308-6ab7a3b139a6"
+    },
+    {
+      "_id": "simply-nice",
+      "name": "Simply Nice",
+      "etage": "Dachgeschoss",
+      "kurz": "Zwei getrennte Schlafzimmer",
+      "preis_werktags": 92,
+      "preis_wochenende": 109,
+      "preis_weihnachten": 112,
+      "angebot": "",
+      "gratis_nacht_ab": 0,
+      "personen": 3,
+      "groesse": "50 m²",
+      "schlafzimmer": 2,
+      "beschreibung": "Simply Nice liegt im Dachgeschoss der Stadtvilla. Auf 50 m² gibt es zwei getrennte Schlafzimmer mit je einem Einzelbett und eine Schlafcouch – Platz für bis zu drei Personen, und jeder hat seinen Rückzugsort.\n\nDazu gibt es ein Bad mit Wanne und Dusche, eine ausgestattete Küche und Smart-TV. Bettwäsche und Handtücher sind inklusive.",
+      "raeume": [
+        {
+          "name": "Schlafzimmer 1",
+          "text": "Einzelbett, Sitzecke mit Schlafcouch"
+        },
+        {
+          "name": "Schlafzimmer 2",
+          "text": "Einzelbett, Sessel, Dachfenster"
+        },
+        {
+          "name": "Küche",
+          "text": "Mikrowelle, Toaster, Wasserkocher, Kaffeemaschine, Kaffee und Tee"
+        },
+        {
+          "name": "Bad",
+          "text": "Badewanne und Dusche, Duschgel, Föhn"
+        }
+      ],
+      "betten": [
+        {
+          "text": "Zwei Einzelbetten, eins pro Schlafzimmer"
+        },
+        {
+          "text": "Eine Schlafcouch als drittes Bett"
+        },
+        {
+          "text": "Babybett für 10 € pro Aufenthalt"
+        }
+      ],
+      "ausstattung": [
+        {
+          "text": "WLAN"
+        },
+        {
+          "text": "Smart-TV"
+        },
+        {
+          "text": "Badewanne und Dusche"
+        },
+        {
+          "text": "Kaffeemaschine"
+        },
+        {
+          "text": "Bettwäsche und Handtücher"
+        },
+        {
+          "text": "Föhn"
+        },
+        {
+          "text": "Bügeleisen"
+        },
+        {
+          "text": "Hygieneartikel"
+        },
+        {
+          "text": "Parkplatz"
+        },
+        {
+          "text": "Fahrradgarage"
+        }
+      ],
+      "hinweise": [
+        {
+          "text": "Anreise ab 15 Uhr, Abreise bis 11 Uhr"
+        },
+        {
+          "text": "Rauchen in der Wohnung nicht gestattet"
+        },
+        {
+          "text": "Haustiere sind nicht erlaubt"
+        },
+        {
+          "text": "Nur über die Treppe erreichbar"
+        },
+        {
+          "text": "Autobahn A72, Abfahrt Borna-Nord"
+        }
+      ],
+      "fotos": [
+        {
+          "datei": "nice-01-schlafzimmer-mit-sitzecke.jpg",
+          "text": "Schlafzimmer mit Sitzecke"
+        },
+        {
+          "datei": "nice-02-zimmer-unter-dem-dach.jpg",
+          "text": "Zimmer unter dem Dach"
+        },
+        {
+          "datei": "nice-03-zimmer-mit-schlafcouch.jpg",
+          "text": "Zimmer mit Schlafcouch"
+        },
+        {
+          "datei": "nice-04-kueche.jpg",
+          "text": "Küche"
+        },
+        {
+          "datei": "nice-05-fernseher-und-sideboard.jpg",
+          "text": "Fernseher und Sideboard"
+        }
+      ],
+      "gesperrt": [],
+      "bewertung_note": 8.7,
+      "bewertung_anzahl": 29,
+      "bewertung_link": "https://www.booking.com/hotel/de/simply-nice-appartment.de.html",
+      "booking_ical": "https://ical.booking.com/v1/export?t=f2d8ec97-c71e-469e-a06b-f6382d4bc212"
+    }
+  ],
+  "allgemein": {
+    "endreinigung": 25,
+    "mindestaufenthalt": 2,
+    "kaminholz_pro_korb": 10,
+    "babybett": 10,
+    "direkt_vorteil": "Profitieren Sie von unseren Preisen für Direktbuchungen.",
+    "weihnachts_naechte": [
+      "2026-12-24",
+      "2026-12-25",
+      "2026-12-26"
+    ]
+  },
+  "kontakt": {
+    "name": "Uta Finke",
+    "strasse": "Robert-Koch-Straße 26",
+    "ort": "04552 Borna",
+    "telefon": "0178 1895560",
+    "email": "utafinke@web.de"
+  }
+}
