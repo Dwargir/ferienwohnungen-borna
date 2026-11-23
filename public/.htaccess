@@ -1,4 +1,4 @@
-# Ferienwohnungen Borna – Einstellungen für IONOS (Apache)
+# Ferienwohnungen Borna – Einstellungen für den Webspace (Apache, z. B. netcup)
 DirectoryIndex index.html index.php
 Options -Indexes
 

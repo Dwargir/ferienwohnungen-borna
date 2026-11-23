@@ -1,7 +1,7 @@
 <?php
 /*
  * Ferienhaft-Admin
- * Läuft auf normalem PHP-Webspace (z. B. IONOS), ohne Datenbank.
+ * Läuft auf normalem PHP-Webspace (z. B. netcup Webhosting, PHP ab 8.1), ohne Datenbank.
  * Liest ../felder.json (was änderbar ist) und schreibt ../inhalt.json (die Inhalte).
  *
  * Sicherheit:

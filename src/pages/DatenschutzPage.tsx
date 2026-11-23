@@ -25,10 +25,10 @@ export default function DatenschutzPage() {
       <section>
         <h2>Hosting und Server-Logdateien</h2>
         <p>
-          Die Website wird bei der IONOS SE, Elgendorfer Straße 57, 56410 Montabaur, gehostet. Beim Aufruf
+          Die Website wird bei der netcup GmbH, Emmy-Noether-Straße 10, 76131 Karlsruhe, auf Servern in Deutschland gehostet. Beim Aufruf
           der Seiten werden technisch notwendige Daten verarbeitet: IP-Adresse, Datum und Uhrzeit, aufgerufene Seite,
           Browsertyp und Betriebssystem. Das ist nötig, um die Website sicher auszuliefern (Art. 6 Abs. 1 lit. f DSGVO).
-          Mit IONOS besteht ein Vertrag zur Auftragsverarbeitung.
+          Mit netcup besteht ein Vertrag zur Auftragsverarbeitung.
         </p>
       </section>
 

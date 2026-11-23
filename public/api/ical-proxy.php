@@ -1,6 +1,6 @@
 <?php
 /*
- * Holt die Belegungskalender von Booking.com für die Website (Version für IONOS).
+ * Holt die Belegungskalender von Booking.com für die Website (Version für PHP-Webspace, z. B. netcup).
  * Nur Adressen von Booking.com werden abgerufen.
  * ?pruefen=1 zeigt eine lesbare Zusammenfassung zum Nachsehen.
  */

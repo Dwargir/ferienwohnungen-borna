@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
-# Baut das Kundenpaket für IONOS:
+# Baut das Kundenpaket für den Webspace des Kunden (netcup Webhosting, PHP ab 8.1):
 #   ./paket.sh [quellordner] [name.zip]
 # quellordner = fertig gebaute Seite (Standard: dist, wird bei Bedarf mit "npm run build" erzeugt)
 # Erzeugt einen frischen Einrichtungscode. Ins Paket kommt nur dessen Hash.
 set -euo pipefail
 
 QUELLE="${1:-dist}"
-ZIP="${2:-ferienwohnungen-borna-ionos.zip}"
+ZIP="${2:-ferienwohnungen-borna.zip}"
 cd "$(dirname "$0")"
 
 if [ "$QUELLE" = "dist" ] && [ ! -f dist/index.html ]; then
