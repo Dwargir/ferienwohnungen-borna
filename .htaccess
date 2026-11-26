@@ -1,0 +1,48 @@
+# Ferienwohnungen Borna – Einstellungen für den Webspace (Apache, z. B. Hetzner)
+DirectoryIndex index.html index.php
+Options -Indexes
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Immer HTTPS
+  RewriteCond %{HTTPS} !=on
+  RewriteCond %{HTTP:X-Forwarded-Proto} !=https
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+  # Belegungsabgleich mit Booking.com
+  RewriteRule ^api/ical-proxy/?$ api/ical-proxy.php [L,QSA]
+
+  # Unterseiten ohne .html (z. B. /simply-good -> simply-good.html)
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME}.html -f
+  RewriteRule ^(.+?)/?$ $1.html [L]
+
+  # Alles andere übernimmt die Seite selbst
+  RewriteCond %{REQUEST_URI} !^/(admin|api|bilder)/
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^ index.html [L]
+</IfModule>
+
+# Interne Dateien nicht ausliefern
+<FilesMatch "\.(sh|md|zip|bak|tmp)$">
+  Require all denied
+</FilesMatch>
+
+# Zwischenspeichern: Bilder und Skripte lange, Inhalte nie
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/jpeg "access plus 30 days"
+  ExpiresByType image/png "access plus 30 days"
+  ExpiresByType image/webp "access plus 30 days"
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType text/html "access plus 0 seconds"
+  ExpiresByType application/json "access plus 0 seconds"
+</IfModule>
+
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json image/svg+xml
+</IfModule>
