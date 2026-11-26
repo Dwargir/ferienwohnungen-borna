@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Baut das Kundenpaket für den Webspace des Kunden (netcup Webhosting, PHP ab 8.1):
+# Baut das Kundenpaket für den Webspace des Kunden (Hetzner Webhosting, PHP ab 8.1):
 #   ./paket.sh [quellordner] [name.zip]
 # quellordner = fertig gebaute Seite (Standard: dist, wird bei Bedarf mit "npm run build" erzeugt)
 # Erzeugt einen frischen Einrichtungscode. Ins Paket kommt nur dessen Hash.

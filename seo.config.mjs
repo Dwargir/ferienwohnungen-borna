@@ -2,7 +2,7 @@
   SEO-Einstellungen: Adresse der Website, Seitentitel und Beschreibungen für Google.
   Wird beim Bauen (scripts/seo-seiten.mjs) und von der Seite selbst genutzt.
 
-  WICHTIG: SITE_URL auf die endgültige Domain setzen, sobald sie beim Webhoster (netcup) verbunden ist.
+  WICHTIG: SITE_URL auf die endgültige Domain setzen, sobald sie beim Webhoster (Hetzner) verbunden ist.
 */
 export const SITE_URL = 'https://www.borna-fewo.de';
 export const SITE_NAME = 'Ferienwohnungen Borna';

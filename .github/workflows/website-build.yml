@@ -1,4 +1,4 @@
-# Baut die Website für den Webspace des Kunden (netcup, ohne Vercel).
+# Baut die Website für den Webspace des Kunden (Hetzner, ohne Vercel).
 # Ergebnis: Download "website-dist" unter Actions -> Lauf -> Artifacts.
 # Daraus macht ./paket.sh <ordner> das Kundenpaket mit Einrichtungscode (lokal, damit der Code nie im Log steht).
 name: Website bauen
